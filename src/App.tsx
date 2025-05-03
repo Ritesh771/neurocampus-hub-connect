@@ -14,6 +14,7 @@ import RankPage from "./pages/RankPage";
 import MaterialsPage from "./pages/MaterialsPage";
 import ChatPage from "./pages/ChatPage";
 import GradesPage from "./pages/GradesPage";
+import SettingsPage from "./pages/SettingsPage";
 
 // Placeholder components for feature pages
 const UsersPage = () => <div className="p-4">Users Management Page</div>;
@@ -21,7 +22,6 @@ const DepartmentsPage = () => <div className="p-4">Departments Page</div>;
 const FacultyPage = () => <div className="p-4">Faculty Management Page</div>;
 const StudentsPage = () => <div className="p-4">Students Management Page</div>;
 const CoursesPage = () => <div className="p-4">Courses Page</div>;
-const SettingsPage = () => <div className="p-4">Settings Page</div>;
 
 const queryClient = new QueryClient();
 
