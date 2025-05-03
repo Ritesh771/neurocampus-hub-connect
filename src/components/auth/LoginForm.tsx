@@ -28,6 +28,9 @@ export const LoginForm: React.FC = () => {
           </div>
           <CardTitle className="text-2xl font-bold">Welcome to NeuroCampus</CardTitle>
           <CardDescription>Sign in to access your dashboard</CardDescription>
+          <p className="text-sm text-gray-500 mt-2">
+            Developed by Ritesh N
+          </p>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>
