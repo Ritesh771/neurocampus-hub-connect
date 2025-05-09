@@ -1,7 +1,42 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
+import { PerformanceChart } from '../charts/PerformanceChart';
+import { AttendanceChart } from '../charts/AttendanceChart';
+import { PieChartCard } from '../charts/PieChartCard';
+import { EnrollmentChart } from '../charts/EnrollmentChart';
+import { motion } from 'framer-motion';
+
+// Mock data for charts
+const performanceData = [
+  { name: 'Jan', attendance: 88, marks: 72, average: 68 },
+  { name: 'Feb', attendance: 90, marks: 75, average: 70 },
+  { name: 'Mar', attendance: 92, marks: 78, average: 72 },
+  { name: 'Apr', attendance: 89, marks: 80, average: 74 },
+  { name: 'May', attendance: 87, marks: 76, average: 73 },
+];
+
+const attendanceData = [
+  { name: 'Mon', present: 85, absent: 15 },
+  { name: 'Tue', present: 88, absent: 12 },
+  { name: 'Wed', present: 92, absent: 8 },
+  { name: 'Thu', present: 87, absent: 13 },
+  { name: 'Fri', present: 81, absent: 19 },
+];
+
+const enrollmentTrends = [
+  { year: '2020', students: 380, male: 220, female: 160 },
+  { year: '2021', students: 410, male: 230, female: 180 },
+  { year: '2022', students: 435, male: 240, female: 195 },
+  { year: '2023', students: 460, male: 250, female: 210 },
+  { year: '2024', students: 476, male: 256, female: 220 },
+];
+
+const deptDistribution = [
+  { name: 'Computer Science', value: 220 },
+  { name: 'Information Technology', value: 180 },
+  { name: 'Cybersecurity', value: 76 },
+];
 
 export const HODDashboard: React.FC = () => {
   return (
@@ -92,41 +127,32 @@ export const HODDashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Attendance and Performance */}
+      {/* Charts Grid */}
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Department Attendance Trends</CardTitle>
-            <CardDescription>
-              Monthly attendance statistics across all courses
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[240px] flex items-center justify-center bg-gray-50 rounded-lg border border-dashed border-gray-200">
-              <div className="text-center">
-                <p className="text-sm text-gray-500">Attendance Trend Chart</p>
-                <p className="text-xs text-gray-400 mt-1">Data visualization will appear here</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <PerformanceChart 
+          title="Department Performance Trends" 
+          description="Academic performance and attendance statistics"
+          data={performanceData}
+        />
         
-        <Card>
-          <CardHeader>
-            <CardTitle>Academic Performance</CardTitle>
-            <CardDescription>
-              Average grades by course category
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[240px] flex items-center justify-center bg-gray-50 rounded-lg border border-dashed border-gray-200">
-              <div className="text-center">
-                <p className="text-sm text-gray-500">Performance Chart</p>
-                <p className="text-xs text-gray-400 mt-1">Data visualization will appear here</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <AttendanceChart
+          title="Weekly Attendance Statistics"
+          description="Current week attendance overview"
+          data={attendanceData}
+        />
+
+        <PieChartCard
+          title="Student Distribution"
+          description="Students across specializations"
+          data={deptDistribution}
+        />
+
+        <EnrollmentChart
+          title="Enrollment Trends"
+          description="Year-on-year enrollment statistics"
+          data={enrollmentTrends}
+          showGenderDistribution={true}
+        />
       </div>
 
       {/* Faculty Performance & Actions */}

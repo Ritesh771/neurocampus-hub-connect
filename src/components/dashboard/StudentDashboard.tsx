@@ -1,8 +1,29 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
 import { useAuth } from '@/context/AuthContext';
+import { PerformanceChart } from '../charts/PerformanceChart';
+import { SkillRadarChart } from '../charts/SkillRadarChart';
+import { motion } from 'framer-motion';
+
+// Mock data for charts
+const performanceData = [
+  { name: 'Jan', attendance: 94, marks: 88, average: 82 },
+  { name: 'Feb', attendance: 96, marks: 92, average: 84 },
+  { name: 'Mar', attendance: 93, marks: 89, average: 83 },
+  { name: 'Apr', attendance: 92, marks: 85, average: 80 },
+  { name: 'May', attendance: 90, marks: 88, average: 82 },
+];
+
+const skillsData = [
+  { subject: 'Algorithm', student: 85, average: 70, fullMark: 100 },
+  { subject: 'Database', student: 90, average: 75, fullMark: 100 },
+  { subject: 'Web Dev', student: 82, average: 78, fullMark: 100 },
+  { subject: 'UI/UX', student: 75, average: 72, fullMark: 100 },
+  { subject: 'Networks', student: 80, average: 68, fullMark: 100 },
+  { subject: 'Testing', student: 88, average: 74, fullMark: 100 },
+];
 
 export const StudentDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -93,12 +114,27 @@ export const StudentDashboard: React.FC = () => {
         </Card>
       </div>
 
+      {/* Performance Charts */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <PerformanceChart 
+          title="Academic Performance" 
+          description="Monthly attendance and marks compared to class average"
+          data={performanceData}
+        />
+        
+        <SkillRadarChart
+          title="Skills Assessment"
+          description="Your performance across different skill categories"
+          data={skillsData}
+        />
+      </div>
+
       {/* Today's Schedule */}
       <Card>
         <CardHeader>
           <CardTitle>Today's Schedule</CardTitle>
           <CardDescription>
-            Your classes and activities for today, May 3, 2025
+            Your classes and activities for today, May 9, 2025
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -268,7 +304,7 @@ export const StudentDashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Materials & Performance */}
+      {/* Materials & Performance (Update with charts) */}
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
@@ -322,50 +358,50 @@ export const StudentDashboard: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[240px] flex items-center justify-center bg-gray-50 rounded-lg border border-dashed border-gray-200 mb-4">
-              <div className="text-center">
-                <p className="text-sm text-gray-500">Performance chart</p>
-                <p className="text-xs text-gray-400 mt-1">Score visualization by course</p>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { course: 'CS301', name: 'Operating Systems', grade: 'A-', completion: 68 },
-                { course: 'CS302', name: 'Computer Networks', grade: 'B+', completion: 65 },
-                { course: 'CS303', name: 'Web Development', grade: 'A', completion: 72 },
-                { course: 'CS304', name: 'Artificial Intelligence', grade: 'A+', completion: 75 },
-              ].map((course, i) => (
-                <div key={i} className="border rounded-lg p-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="font-medium text-sm">{course.course}</h4>
-                      <p className="text-xs text-gray-500">{course.name}</p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-4"
+            >
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { course: 'CS301', name: 'Operating Systems', grade: 'A-', completion: 68 },
+                  { course: 'CS302', name: 'Computer Networks', grade: 'B+', completion: 65 },
+                  { course: 'CS303', name: 'Web Development', grade: 'A', completion: 72 },
+                  { course: 'CS304', name: 'Artificial Intelligence', grade: 'A+', completion: 75 },
+                ].map((course, i) => (
+                  <div key={i} className="border rounded-lg p-3">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h4 className="font-medium text-sm">{course.course}</h4>
+                        <p className="text-xs text-gray-500">{course.name}</p>
+                      </div>
+                      <span className={`px-2 py-0.5 text-xs rounded-full ${
+                        course.grade === 'A+' ? 'bg-green-100 text-green-700' :
+                        course.grade === 'A' ? 'bg-green-50 text-green-600' :
+                        course.grade === 'A-' ? 'bg-blue-100 text-blue-700' :
+                        course.grade === 'B+' ? 'bg-blue-50 text-blue-600' : 'bg-yellow-50 text-yellow-600'
+                      }`}>
+                        {course.grade}
+                      </span>
                     </div>
-                    <span className={`px-2 py-0.5 text-xs rounded-full ${
-                      course.grade === 'A+' ? 'bg-green-100 text-green-700' :
-                      course.grade === 'A' ? 'bg-green-50 text-green-600' :
-                      course.grade === 'A-' ? 'bg-blue-100 text-blue-700' :
-                      course.grade === 'B+' ? 'bg-blue-50 text-blue-600' : 'bg-yellow-50 text-yellow-600'
-                    }`}>
-                      {course.grade}
-                    </span>
-                  </div>
-                  <div className="mt-2">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs text-gray-500">Course Completion</span>
-                      <span className="text-xs font-medium">{course.completion}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-1.5">
-                      <div 
-                        className="h-1.5 rounded-full bg-primary" 
-                        style={{ width: `${course.completion}%` }}>
+                    <div className="mt-2">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs text-gray-500">Course Completion</span>
+                        <span className="text-xs font-medium">{course.completion}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-1.5">
+                        <div 
+                          className="h-1.5 rounded-full bg-primary" 
+                          style={{ width: `${course.completion}%` }}>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </motion.div>
           </CardContent>
           <CardFooter className="border-t pt-4">
             <Button variant="outline" className="w-full">View Detailed Report</Button>

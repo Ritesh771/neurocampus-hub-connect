@@ -1,6 +1,35 @@
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { EnrollmentChart } from '../charts/EnrollmentChart';
+import { PieChartCard } from '../charts/PieChartCard';
+import { AttendanceChart } from '../charts/AttendanceChart';
+import { motion } from 'framer-motion';
+
+// Mock data for charts
+const enrollmentTrends = [
+  { year: '2020', students: 2100, male: 1200, female: 900 },
+  { year: '2021', students: 2250, male: 1280, female: 970 },
+  { year: '2022', students: 2320, male: 1310, female: 1010 },
+  { year: '2023', students: 2430, male: 1380, female: 1050 },
+  { year: '2024', students: 2543, male: 1450, female: 1093 },
+];
+
+const departmentDistribution = [
+  { name: 'Computer Science', value: 476 },
+  { name: 'Electrical Eng.', value: 356 },
+  { name: 'Mechanical Eng.', value: 412 },
+  { name: 'Civil Eng.', value: 298 },
+  { name: 'Information Tech.', value: 521 },
+];
+
+const attendanceData = [
+  { name: 'CS', present: 92, absent: 8 },
+  { name: 'EE', present: 88, absent: 12 },
+  { name: 'ME', present: 85, absent: 15 },
+  { name: 'CE', present: 90, absent: 10 },
+  { name: 'IT', present: 91, absent: 9 },
+];
 
 export const AdminDashboard: React.FC = () => {
   return (
@@ -91,23 +120,53 @@ export const AdminDashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Attendance Overview */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Attendance Overview</CardTitle>
-          <CardDescription>
-            Campus-wide attendance trends for the current semester
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="h-[200px] flex items-center justify-center bg-gray-50 rounded-lg border border-dashed border-gray-200">
-            <div className="text-center">
-              <p className="text-sm text-gray-500">Attendance Chart will appear here</p>
-              <p className="text-xs text-gray-400 mt-1">Data visualization component will load here</p>
+      {/* Charts Grid */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <EnrollmentChart 
+          title="Institution Enrollment Trends" 
+          description="5-year enrollment data"
+          data={enrollmentTrends} 
+        />
+        
+        <AttendanceChart
+          title="Department Attendance Overview"
+          description="Average attendance by department"
+          data={attendanceData}
+        />
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <PieChartCard
+          title="Student Distribution by Department"
+          description="Current semester enrollment breakdown"
+          data={departmentDistribution}
+        />
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Attendance Overview</CardTitle>
+            <CardDescription>
+              Campus-wide attendance trends for the current semester
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px] flex items-center justify-center bg-gray-50 rounded-lg border border-dashed border-gray-200">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-auto text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                <p className="mt-2 text-sm font-medium">Detailed Attendance Visualization</p>
+                <p className="text-xs text-gray-500 mt-1">Click to load expanded view</p>
+              </motion.div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Recent Activity */}
       <div className="grid gap-4 md:grid-cols-2">
