@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { PerformanceChart } from '../charts/PerformanceChart';
 import { AttendanceChart } from '../charts/AttendanceChart';
 import { PieChartCard } from '../charts/PieChartCard';
+import { EnrollmentChart } from '../charts/EnrollmentChart';
 import { motion } from 'framer-motion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Users, FileText, BookOpen, ClipboardList, MessageSquare, Bell } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
+import { Calendar, Clock, Users, FileText } from 'lucide-react';
 
 // Mock data for charts
 const performanceData = [
@@ -28,34 +28,39 @@ const attendanceData = [
   { name: 'Fri', present: 81, absent: 19 },
 ];
 
-const branchDistribution = [
+const enrollmentTrends = [
+  { year: '2020', students: 380, male: 220, female: 160 },
+  { year: '2021', students: 410, male: 230, female: 180 },
+  { year: '2022', students: 435, male: 240, female: 195 },
+  { year: '2023', students: 460, male: 250, female: 210 },
+  { year: '2024', students: 476, male: 256, female: 220 },
+];
+
+const deptDistribution = [
   { name: 'B.Tech', value: 220 },
   { name: 'M.Tech', value: 180 },
   { name: 'PhD', value: 76 },
 ];
 
 export const HODDashboard: React.FC = () => {
-  const { user } = useAuth();
-  const departmentName = "Computer Science"; // This would ideally come from user context
-
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Department Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Department Head Dashboard</h1>
         <div className="mt-2 md:mt-0 flex items-center">
-          <span className="text-sm text-gray-500">{departmentName} Department</span>
+          <span className="text-sm text-gray-500">Computer Science Department</span>
           <span className="mx-2 text-gray-300">|</span>
-          <span className="text-sm text-gray-500">Spring 2025</span>
+          <span className="text-sm text-gray-500">Spring Semester</span>
         </div>
       </div>
 
-      {/* Department Quick Actions */}
+      {/* Quick Actions */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { title: "Manage Sections", icon: <Calendar className="h-5 w-5" />, color: "bg-blue-500" },
+          { title: "Manage Semesters", icon: <Calendar className="h-5 w-5" />, color: "bg-blue-500" },
           { title: "Assign Faculty", icon: <Users className="h-5 w-5" />, color: "bg-green-500" },
-          { title: "Faculty Leaves", icon: <ClipboardList className="h-5 w-5" />, color: "bg-amber-500" },
-          { title: "Announcements", icon: <Bell className="h-5 w-5" />, color: "bg-purple-500" }
+          { title: "Approve Leaves", icon: <Clock className="h-5 w-5" />, color: "bg-amber-500" },
+          { title: "Generate Reports", icon: <FileText className="h-5 w-5" />, color: "bg-purple-500" }
         ].map((action, i) => (
           <motion.div
             key={i}
@@ -79,7 +84,7 @@ export const HODDashboard: React.FC = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Students</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Students</CardTitle>
             <Users className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
@@ -95,7 +100,7 @@ export const HODDashboard: React.FC = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Faculty</CardTitle>
+            <CardTitle className="text-sm font-medium">Faculty Members</CardTitle>
             <Users className="h-4 w-4 text-gray-500" />
           </CardHeader>
           <CardContent>
@@ -111,16 +116,18 @@ export const HODDashboard: React.FC = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Courses</CardTitle>
-            <BookOpen className="h-4 w-4 text-gray-500" />
+            <CardTitle className="text-sm font-medium">Course Completion</CardTitle>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">24</div>
+            <div className="text-2xl font-bold">87%</div>
             <p className="text-xs text-green-500 flex items-center mt-1">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
-              <span>+3 new courses</span>
+              <span>+2.4% from last semester</span>
             </p>
           </CardContent>
         </Card>
@@ -128,7 +135,9 @@ export const HODDashboard: React.FC = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Avg. Attendance</CardTitle>
-            <ClipboardList className="h-4 w-4 text-gray-500" />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">92.3%</div>
@@ -142,24 +151,64 @@ export const HODDashboard: React.FC = () => {
         </Card>
       </div>
 
-      {/* Department Management Tabs */}
+      {/* Branch Management Tabs */}
       <Card>
         <CardHeader>
-          <CardTitle>Department Management</CardTitle>
-          <CardDescription>Manage sections, faculty assignments and academic structure</CardDescription>
+          <CardTitle>Branch Management</CardTitle>
+          <CardDescription>Manage semesters, sections, and academic structures</CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="sections" className="w-full">
+          <Tabs defaultValue="semesters" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="sections">Sections & Semesters</TabsTrigger>
+              <TabsTrigger value="semesters">Semesters</TabsTrigger>
+              <TabsTrigger value="sections">Sections</TabsTrigger>
               <TabsTrigger value="faculty">Faculty Assignment</TabsTrigger>
-              <TabsTrigger value="timetable">Timetable</TabsTrigger>
             </TabsList>
-            
+            <TabsContent value="semesters" className="mt-4">
+              <div className="space-y-4">
+                <div className="flex justify-between">
+                  <h3 className="text-sm font-medium">Current Semester</h3>
+                  <Button size="sm">Add New Semester</Button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 font-medium text-sm">Semester</th>
+                        <th className="text-center py-2 font-medium text-sm">Start Date</th>
+                        <th className="text-center py-2 font-medium text-sm">End Date</th>
+                        <th className="text-center py-2 font-medium text-sm">Status</th>
+                        <th className="text-right py-2 font-medium text-sm">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        { name: 'Spring 2025', start: 'Jan 10, 2025', end: 'May 20, 2025', status: 'Current' },
+                        { name: 'Fall 2024', start: 'Aug 15, 2024', end: 'Dec 20, 2024', status: 'Completed' },
+                        { name: 'Summer 2024', start: 'May 20, 2024', end: 'Jul 30, 2024', status: 'Completed' },
+                      ].map((sem, i) => (
+                        <tr key={i} className="border-b hover:bg-gray-50">
+                          <td className="py-3 text-sm">{sem.name}</td>
+                          <td className="py-3 text-sm text-center">{sem.start}</td>
+                          <td className="py-3 text-sm text-center">{sem.end}</td>
+                          <td className="py-3 text-sm text-center">
+                            <Badge variant={sem.status === 'Current' ? "default" : "secondary"}>{sem.status}</Badge>
+                          </td>
+                          <td className="py-3 text-sm text-right">
+                            <Button variant="ghost" size="sm">Edit</Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </TabsContent>
+
             <TabsContent value="sections" className="mt-4">
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <h3 className="text-sm font-medium">Department Sections</h3>
+                  <h3 className="text-sm font-medium">Sections</h3>
                   <Button size="sm">Add New Section</Button>
                 </div>
                 <div className="overflow-x-auto">
@@ -167,7 +216,7 @@ export const HODDashboard: React.FC = () => {
                     <thead>
                       <tr className="border-b">
                         <th className="text-left py-2 font-medium text-sm">Section</th>
-                        <th className="text-center py-2 font-medium text-sm">Semester</th>
+                        <th className="text-center py-2 font-medium text-sm">Year</th>
                         <th className="text-center py-2 font-medium text-sm">Students</th>
                         <th className="text-center py-2 font-medium text-sm">Class Advisor</th>
                         <th className="text-right py-2 font-medium text-sm">Actions</th>
@@ -175,14 +224,14 @@ export const HODDashboard: React.FC = () => {
                     </thead>
                     <tbody>
                       {[
-                        { name: 'CS-A', semester: '3rd Sem', students: 60, advisor: 'Dr. Sarah Johnson' },
-                        { name: 'CS-B', semester: '3rd Sem', students: 58, advisor: 'Prof. Michael Chen' },
-                        { name: 'CS-C', semester: '5th Sem', students: 62, advisor: 'Dr. Emily Rodriguez' },
-                        { name: 'CS-D', semester: '5th Sem', students: 59, advisor: 'Prof. David Kim' },
+                        { name: 'CS-A', year: '2nd Year', students: 60, advisor: 'Dr. Sarah Johnson' },
+                        { name: 'CS-B', year: '2nd Year', students: 58, advisor: 'Prof. Michael Chen' },
+                        { name: 'CS-C', year: '3rd Year', students: 62, advisor: 'Dr. Emily Rodriguez' },
+                        { name: 'CS-D', year: '3rd Year', students: 59, advisor: 'Prof. David Kim' },
                       ].map((section, i) => (
                         <tr key={i} className="border-b hover:bg-gray-50">
                           <td className="py-3 text-sm">{section.name}</td>
-                          <td className="py-3 text-sm text-center">{section.semester}</td>
+                          <td className="py-3 text-sm text-center">{section.year}</td>
                           <td className="py-3 text-sm text-center">{section.students}</td>
                           <td className="py-3 text-sm text-center">{section.advisor}</td>
                           <td className="py-3 text-sm text-right">
@@ -199,7 +248,7 @@ export const HODDashboard: React.FC = () => {
             <TabsContent value="faculty" className="mt-4">
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <h3 className="text-sm font-medium">Subject-Faculty Assignments</h3>
+                  <h3 className="text-sm font-medium">Faculty Assignments</h3>
                   <Button size="sm">Assign Faculty</Button>
                 </div>
                 <div className="overflow-x-auto">
@@ -208,7 +257,7 @@ export const HODDashboard: React.FC = () => {
                       <tr className="border-b">
                         <th className="text-left py-2 font-medium text-sm">Subject</th>
                         <th className="text-center py-2 font-medium text-sm">Semester</th>
-                        <th className="text-center py-2 font-medium text-sm">Section(s)</th>
+                        <th className="text-center py-2 font-medium text-sm">Sections</th>
                         <th className="text-center py-2 font-medium text-sm">Faculty</th>
                         <th className="text-right py-2 font-medium text-sm">Actions</th>
                       </tr>
@@ -235,82 +284,85 @@ export const HODDashboard: React.FC = () => {
                 </div>
               </div>
             </TabsContent>
-
-            <TabsContent value="timetable" className="mt-4">
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <h3 className="text-sm font-medium">Department Timetable</h3>
-                  <Button size="sm">Schedule Class</Button>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-2 font-medium text-sm">Course</th>
-                        <th className="text-center py-2 font-medium text-sm">Section</th>
-                        <th className="text-center py-2 font-medium text-sm">Day & Time</th>
-                        <th className="text-center py-2 font-medium text-sm">Room</th>
-                        <th className="text-center py-2 font-medium text-sm">Faculty</th>
-                        <th className="text-right py-2 font-medium text-sm">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        { course: 'Data Structures', section: 'CS-A', time: 'Mon, 10:00-11:30', room: '301', faculty: 'Dr. Johnson', status: 'Scheduled' },
-                        { course: 'Machine Learning', section: 'CS-C', time: 'Wed, 14:00-15:30', room: '405', faculty: 'Dr. Rodriguez', status: 'Clash Detected' },
-                        { course: 'Web Development', section: 'CS-D', time: 'Thu, 09:00-10:30', room: '302', faculty: 'Prof. Kim', status: 'Scheduled' },
-                      ].map((item, i) => (
-                        <tr key={i} className="border-b hover:bg-gray-50">
-                          <td className="py-3 text-sm">{item.course}</td>
-                          <td className="py-3 text-sm text-center">{item.section}</td>
-                          <td className="py-3 text-sm text-center">{item.time}</td>
-                          <td className="py-3 text-sm text-center">{item.room}</td>
-                          <td className="py-3 text-sm text-center">{item.faculty}</td>
-                          <td className="py-3 text-sm text-right">
-                            <Badge variant={item.status === 'Clash Detected' ? "destructive" : "outline"}>{item.status}</Badge>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
 
-      {/* Department Performance Analytics */}
+      {/* Charts Grid */}
       <div className="grid gap-6 md:grid-cols-2">
         <PerformanceChart 
           title="Department Performance Trends" 
-          description="Academic performance metrics for current semester"
+          description="Academic performance and attendance statistics"
           data={performanceData}
         />
         
         <AttendanceChart
           title="Weekly Attendance Statistics"
-          description="Current week attendance by day"
+          description="Current week attendance overview"
           data={attendanceData}
+        />
+
+        <PieChartCard
+          title="Student Distribution"
+          description="Students across programs"
+          data={deptDistribution}
+        />
+
+        <EnrollmentChart
+          title="Enrollment Trends"
+          description="Year-on-year enrollment statistics"
+          data={enrollmentTrends}
+          showGenderDistribution={true}
         />
       </div>
 
-      {/* Student Distribution */}
+      {/* Timetable Management */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>Student Distribution</CardTitle>
-            <CardDescription>Distribution across programs in the department</CardDescription>
+            <CardTitle>Timetable Management</CardTitle>
+            <CardDescription>Manage class schedules with clash detection</CardDescription>
           </div>
+          <Button variant="outline" size="sm">View Full Timetable</Button>
         </CardHeader>
         <CardContent>
-          <div className="h-80">
-            <PieChartCard
-              title=""
-              description=""
-              data={branchDistribution}
-              hideHeader={true}
-            />
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium">Recent Schedule Changes</h3>
+              <Button size="sm">Schedule New Class</Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-2 font-medium text-sm">Course</th>
+                    <th className="text-center py-2 font-medium text-sm">Section</th>
+                    <th className="text-center py-2 font-medium text-sm">Day & Time</th>
+                    <th className="text-center py-2 font-medium text-sm">Room</th>
+                    <th className="text-center py-2 font-medium text-sm">Faculty</th>
+                    <th className="text-right py-2 font-medium text-sm">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { course: 'Data Structures', section: 'CS-A', time: 'Mon, 10:00-11:30', room: '301', faculty: 'Dr. Johnson', status: 'Scheduled' },
+                    { course: 'Machine Learning', section: 'CS-C', time: 'Wed, 14:00-15:30', room: '405', faculty: 'Dr. Rodriguez', status: 'Clash Detected' },
+                    { course: 'Web Development', section: 'CS-D', time: 'Thu, 09:00-10:30', room: '302', faculty: 'Prof. Kim', status: 'Scheduled' },
+                  ].map((item, i) => (
+                    <tr key={i} className="border-b hover:bg-gray-50">
+                      <td className="py-3 text-sm">{item.course}</td>
+                      <td className="py-3 text-sm text-center">{item.section}</td>
+                      <td className="py-3 text-sm text-center">{item.time}</td>
+                      <td className="py-3 text-sm text-center">{item.room}</td>
+                      <td className="py-3 text-sm text-center">{item.faculty}</td>
+                      <td className="py-3 text-sm text-right">
+                        <Badge variant={item.status === 'Clash Detected' ? "destructive" : "outline"}>{item.status}</Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -320,13 +372,13 @@ export const HODDashboard: React.FC = () => {
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Leave Management</CardTitle>
-            <CardDescription>Faculty leave requests requiring approval</CardDescription>
+            <CardDescription>Faculty and self leave requests</CardDescription>
           </div>
           <Button variant="outline" size="sm">Apply for Leave</Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <h3 className="text-sm font-medium">Pending Faculty Leave Requests</h3>
+            <h3 className="text-sm font-medium">Pending Leave Requests</h3>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -368,22 +420,22 @@ export const HODDashboard: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Communication Tools */}
+      {/* Announcements & Communication */}
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Department Announcements</CardTitle>
             <CardDescription>
-              Send announcements to faculty and students
+              Create and manage department-wide announcements
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <Button className="w-full">Create New Announcement</Button>
               {[
-                { title: 'End of Semester Exam Schedule', date: 'May 6, 2025', audience: 'All Students' },
-                { title: 'Faculty Development Workshop', date: 'May 15, 2025', audience: 'Faculty Members' },
-                { title: 'Department Accreditation Meeting', date: 'May 25, 2025', audience: 'Faculty Members' },
+                { title: 'End of Semester Exam Schedule', date: 'May 6, 2025', type: 'Academic' },
+                { title: 'Faculty Development Program', date: 'May 15, 2025', type: 'Event' },
+                { title: 'Department Accreditation Visit', date: 'May 25, 2025', type: 'Important' },
               ].map((announcement, i) => (
                 <div key={i} className="border-l-2 border-primary pl-3">
                   <div className="flex items-center justify-between">
@@ -393,11 +445,14 @@ export const HODDashboard: React.FC = () => {
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-xs text-gray-500">{announcement.date}</span>
                     <Badge variant="outline" className="text-xs">
-                      {announcement.audience}
+                      {announcement.type}
                     </Badge>
                   </div>
                 </div>
               ))}
+              <Button variant="ghost" className="w-full text-xs h-8 mt-2">
+                View All Announcements
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -406,13 +461,13 @@ export const HODDashboard: React.FC = () => {
           <CardHeader>
             <CardTitle>Proctor Assignment</CardTitle>
             <CardDescription>
-              Assign faculty as student mentors/proctors
+              Assign faculty members as student proctors
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               <div className="flex justify-between">
-                <h3 className="text-sm font-medium">Proctor Assignments</h3>
+                <h3 className="text-sm font-medium">Recent Assignments</h3>
                 <Button size="sm">New Assignment</Button>
               </div>
               <table className="w-full">
@@ -441,6 +496,9 @@ export const HODDashboard: React.FC = () => {
                   ))}
                 </tbody>
               </table>
+              <Button variant="ghost" className="w-full text-xs h-8">
+                View All Assignments
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -451,7 +509,7 @@ export const HODDashboard: React.FC = () => {
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
             <CardTitle>Student Enrollment</CardTitle>
-            <CardDescription>Manage department student enrollment</CardDescription>
+            <CardDescription>Manage student enrollment in the department</CardDescription>
           </div>
           <div className="space-x-2">
             <Button size="sm">Manual Enrollment</Button>
@@ -467,7 +525,7 @@ export const HODDashboard: React.FC = () => {
                   <tr className="border-b">
                     <th className="text-left py-2 font-medium text-sm">Student ID</th>
                     <th className="text-left py-2 font-medium text-sm">Name</th>
-                    <th className="text-center py-2 font-medium text-sm">Semester</th>
+                    <th className="text-center py-2 font-medium text-sm">Year</th>
                     <th className="text-center py-2 font-medium text-sm">Section</th>
                     <th className="text-center py-2 font-medium text-sm">Status</th>
                     <th className="text-right py-2 font-medium text-sm">Actions</th>
@@ -475,15 +533,15 @@ export const HODDashboard: React.FC = () => {
                 </thead>
                 <tbody>
                   {[
-                    { id: 'CS2023001', name: 'Alex Johnson', semester: '3rd', section: 'CS-A', status: 'Active' },
-                    { id: 'CS2023002', name: 'Sara Chen', semester: '3rd', section: 'CS-B', status: 'Active' },
-                    { id: 'CS2023003', name: 'Mike Rodriguez', semester: '5th', section: 'CS-C', status: 'Pending' },
-                    { id: 'CS2023004', name: 'Jane Smith', semester: '5th', section: 'CS-D', status: 'Active' },
+                    { id: 'CS2023001', name: 'Alex Johnson', year: '2nd Year', section: 'CS-A', status: 'Active' },
+                    { id: 'CS2023002', name: 'Sara Chen', year: '2nd Year', section: 'CS-B', status: 'Active' },
+                    { id: 'CS2023003', name: 'Mike Rodriguez', year: '3rd Year', section: 'CS-C', status: 'Pending' },
+                    { id: 'CS2023004', name: 'Jane Smith', year: '3rd Year', section: 'CS-D', status: 'Active' },
                   ].map((student, i) => (
                     <tr key={i} className="border-b hover:bg-gray-50">
                       <td className="py-3 text-sm">{student.id}</td>
                       <td className="py-3 text-sm">{student.name}</td>
-                      <td className="py-3 text-sm text-center">{student.semester}</td>
+                      <td className="py-3 text-sm text-center">{student.year}</td>
                       <td className="py-3 text-sm text-center">{student.section}</td>
                       <td className="py-3 text-sm text-center">
                         <Badge variant={student.status === 'Active' ? 'secondary' : 'outline'}>{student.status}</Badge>
@@ -496,47 +554,9 @@ export const HODDashboard: React.FC = () => {
                 </tbody>
               </table>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Chat System */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Department Communication</CardTitle>
-            <CardDescription>In-app chat system for faculty and student communication</CardDescription>
-          </div>
-          <Button size="sm">
-            <MessageSquare className="h-4 w-4 mr-2" /> Open Chat
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium">Recent Messages</h3>
-            <div className="space-y-3">
-              {[
-                { from: 'Dr. Sarah Johnson', time: '10 minutes ago', message: 'Submitted the mid-term evaluation results', unread: true },
-                { from: 'Prof. Michael Chen', time: '2 hours ago', message: 'Request for lab equipment approval', unread: false },
-                { from: 'Student Council', time: '1 day ago', message: 'Regarding technical fest proposals', unread: false },
-              ].map((msg, i) => (
-                <div key={i} className={`p-3 rounded-lg ${msg.unread ? 'bg-primary/5 border border-primary/20' : 'bg-gray-50'}`}>
-                  <div className="flex justify-between">
-                    <h4 className="text-sm font-medium flex items-center">
-                      {msg.from}
-                      {msg.unread && (
-                        <span className="ml-2 w-2 h-2 rounded-full bg-primary"></span>
-                      )}
-                    </h4>
-                    <span className="text-xs text-gray-500">{msg.time}</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-1 truncate">{msg.message}</p>
-                </div>
-              ))}
+            <div className="flex justify-center">
+              <Button variant="ghost" size="sm">View All Students</Button>
             </div>
-            <Button variant="outline" className="w-full text-xs">
-              View All Messages
-            </Button>
           </div>
         </CardContent>
       </Card>
