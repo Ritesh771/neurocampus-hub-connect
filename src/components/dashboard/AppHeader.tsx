@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { SideNav } from '@/components/dashboard/SideNav';
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Logo } from '@/components/ui/logo';
 import { useAuth } from '@/context/AuthContext';
 
@@ -14,20 +13,8 @@ export const AppHeader: React.FC = () => {
   return (
     <header className="bg-white border-b shadow-sm">
       <div className="flex h-14 sm:h-16 items-center px-3 sm:px-4 lg:px-6">
-        {/* Mobile menu */}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden mr-2 h-8 w-8 sm:h-9 sm:w-9">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              <span className="sr-only">Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="p-0 w-[250px] sm:w-[280px]">
-            <SideNav className="border-0" />
-          </SheetContent>
-        </Sheet>
+        {/* Mobile menu trigger */}
+        <SidebarTrigger className="lg:hidden mr-2 h-8 w-8 sm:h-9 sm:w-9" />
 
         {/* Logo and Brand */}
         <div className="flex items-center gap-2 sm:gap-3">

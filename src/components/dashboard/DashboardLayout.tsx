@@ -5,6 +5,7 @@ import { AppHeader } from './AppHeader';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Logo } from '@/components/ui/logo';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 
 export const DashboardLayout: React.FC = () => {
   const { user, loading } = useAuth();
@@ -28,19 +29,16 @@ export const DashboardLayout: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar - hidden on mobile */}
-      <div className="hidden lg:block lg:w-64 xl:w-72 flex-shrink-0">
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-gray-50">
         <SideNav />
+        <SidebarInset>
+          <AppHeader />
+          <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 lg:p-8">
+            <Outlet />
+          </main>
+        </SidebarInset>
       </div>
-      
-      {/* Main content */}
-      <div className="flex flex-col flex-1 min-w-0">
-        <AppHeader />
-        <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 lg:p-8">
-          <Outlet />
-        </main>
-      </div>
-    </div>
+    </SidebarProvider>
   );
 };

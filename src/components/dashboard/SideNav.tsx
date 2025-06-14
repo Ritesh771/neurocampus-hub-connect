@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Logo } from '@/components/ui/logo';
 import { useAuth } from '@/context/AuthContext';
+import { useSidebar } from '@/components/ui/sidebar';
 
 interface NavItem {
   name: string;
@@ -15,6 +16,7 @@ interface NavItem {
 export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const { setOpenMobile } = useSidebar();
 
   const navigation: NavItem[] = [
     { 
@@ -143,6 +145,11 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
     user && item.role.includes(user.role)
   );
 
+  const handleNavClick = () => {
+    // Close mobile sidebar when navigation item is clicked
+    setOpenMobile(false);
+  };
+
   return (
     <div className={cn("flex flex-col h-full bg-white border-r", className)}>
       <div className="flex flex-col flex-grow p-3 sm:p-4 overflow-y-auto">
@@ -162,6 +169,7 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
               <Link
                 key={item.name}
                 to={item.href}
+                onClick={handleNavClick}
                 className={cn(
                   isActive
                     ? "bg-secondary text-primary font-medium"
