@@ -12,7 +12,7 @@ import { Users, UserCheck, Search, AlertTriangle, CheckCircle } from 'lucide-rea
 const ProctorsPage: React.FC = () => {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedFaculty, setSelectedFaculty] = useState('');
+  const [selectedFaculty, setSelectedFaculty] = useState('all');
 
   // Mock proctor assignments data
   const proctorAssignments = [
@@ -45,7 +45,7 @@ const ProctorsPage: React.FC = () => {
   ];
 
   const filteredAssignments = proctorAssignments.filter(assignment => {
-    const matchesFaculty = selectedFaculty === '' || assignment.faculty === selectedFaculty;
+    const matchesFaculty = selectedFaculty === 'all' || assignment.faculty === selectedFaculty;
     const matchesSearch = searchTerm === '' || 
       assignment.faculty.toLowerCase().includes(searchTerm.toLowerCase()) ||
       assignment.mentees.some(mentee => 
@@ -128,7 +128,7 @@ const ProctorsPage: React.FC = () => {
                   <SelectValue placeholder="Filter by Faculty" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Faculty</SelectItem>
+                  <SelectItem value="all">All Faculty</SelectItem>
                   {proctorAssignments.map(assignment => (
                     <SelectItem key={assignment.id} value={assignment.faculty}>
                       {assignment.faculty}
