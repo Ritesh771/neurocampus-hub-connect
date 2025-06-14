@@ -33,6 +33,15 @@ import TimetablePage from "./pages/TimetablePage";
 import NoticesPage from "./pages/NoticesPage";
 import ProctorsPage from "./pages/ProctorsPage";
 import PerformancePage from "./pages/PerformancePage";
+import TakeAttendancePage from "./pages/TakeAttendancePage";
+import UploadMarksPage from "./pages/UploadMarksPage";
+import ApplyLeavePage from "./pages/ApplyLeavePage";
+import AttendanceRecordsPage from "./pages/AttendanceRecordsPage";
+import AnnouncementsPage from "./pages/AnnouncementsPage";
+import ProctorStudentsPage from "./pages/ProctorStudentsPage";
+import ManageStudentLeavePage from "./pages/ManageStudentLeavePage";
+import ScheduleMentoringPage from "./pages/ScheduleMentoringPage";
+import GenerateStatisticsPage from "./pages/GenerateStatisticsPage";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +76,17 @@ const App = () => (
               <Route path="notices" element={<NoticesPage />} />
               <Route path="proctors" element={<ProctorsPage />} />
               <Route path="performance" element={<PerformancePage />} />
+              
+              {/* Faculty routes */}
+              <Route path="take-attendance" element={<TakeAttendancePage />} />
+              <Route path="upload-marks" element={<UploadMarksPage />} />
+              <Route path="apply-leave" element={<ApplyLeavePage />} />
+              <Route path="attendance-records" element={<AttendanceRecordsPage />} />
+              <Route path="announcements" element={<AnnouncementsPage />} />
+              <Route path="proctor-students" element={<ProctorStudentsPage />} />
+              <Route path="manage-student-leave" element={<ManageStudentLeavePage />} />
+              <Route path="schedule-mentoring" element={<ScheduleMentoringPage />} />
+              <Route path="generate-statistics" element={<GenerateStatisticsPage />} />
               
               {/* Common routes */}
               <Route path="departments" element={<DepartmentsPage />} />

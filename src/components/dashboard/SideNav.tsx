@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
@@ -39,7 +38,7 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
       ),
       role: ['admin', 'hod', 'faculty', 'student']
     },
-    // Admin-only navigation items (8 features only)
+    // Admin-only navigation items
     { 
       name: 'Enroll User', 
       href: '/dashboard/enroll-user', 
@@ -100,17 +99,7 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
       ),
       role: ['admin']
     },
-    { 
-      name: 'Profile', 
-      href: '/dashboard/profile', 
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-        </svg>
-      ),
-      role: ['admin', 'hod', 'faculty', 'student']
-    },
-    // HOD navigation items (11 features only)
+    // HOD-only navigation items
     { 
       name: 'Low Attendance', 
       href: '/dashboard/low-attendance', 
@@ -152,16 +141,6 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
       role: ['hod']
     },
     { 
-      name: 'Timetable', 
-      href: '/dashboard/timetable', 
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-        </svg>
-      ),
-      role: ['hod']
-    },
-    { 
       name: 'Notices', 
       href: '/dashboard/notices', 
       icon: (
@@ -191,6 +170,108 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
       ),
       role: ['hod']
     },
+    // Faculty-specific navigation items
+    { 
+      name: 'Take Attendance', 
+      href: '/dashboard/take-attendance', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Upload Marks', 
+      href: '/dashboard/upload-marks', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Apply Leave', 
+      href: '/dashboard/apply-leave', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Attendance Records', 
+      href: '/dashboard/attendance-records', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Announcements', 
+      href: '/dashboard/announcements', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Proctor Students', 
+      href: '/dashboard/proctor-students', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Manage Student Leave', 
+      href: '/dashboard/manage-student-leave', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Timetable', 
+      href: '/dashboard/timetable', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['faculty', 'hod']
+    },
+    { 
+      name: 'Schedule Mentoring', 
+      href: '/dashboard/schedule-mentoring', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    { 
+      name: 'Generate Statistics', 
+      href: '/dashboard/generate-statistics', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+        </svg>
+      ),
+      role: ['faculty']
+    },
+    // Common routes
     { 
       name: 'Chat', 
       href: '/dashboard/chat', 
@@ -200,6 +281,16 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
         </svg>
       ),
       role: ['hod', 'faculty', 'student']
+    },
+    { 
+      name: 'Profile', 
+      href: '/dashboard/profile', 
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+        </svg>
+      ),
+      role: ['admin', 'hod', 'faculty', 'student']
     }
   ];
 
@@ -283,7 +374,7 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
           onClick={logout}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
           </svg>
           Sign out
         </Button>
