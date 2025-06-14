@@ -57,8 +57,8 @@ export const LoginForm: React.FC = () => {
           </div>
           <div className="space-y-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">AMC College</h1>
-            <h2 className="text-lg sm:text-xl font-semibold text-primary">NeuroCampus Portal</h2>
-            <p className="text-sm sm:text-base text-gray-600">Sign in to access your account</p>
+            <h2 className="text-lg sm:text-xl font-semibold text-primary">NeuroCampus </h2>
+            <p className="text-sm sm:text-base text-gray-600">Sign in to access your dashboard</p>
           </div>
         </div>
 
