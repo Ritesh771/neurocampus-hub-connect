@@ -1,14 +1,4 @@
-# Welcome to your Lovable project
 
-## Project info
-
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
