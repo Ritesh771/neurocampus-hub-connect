@@ -39,6 +39,25 @@ export const HODDashboard: React.FC = () => {
     { id: 3, title: 'Student Performance Review', count: 5, priority: 'low' },
   ];
 
+  // Sample data for charts
+  const attendanceData = [
+    { name: 'Sem 1', present: 85, absent: 15 },
+    { name: 'Sem 2', present: 88, absent: 12 },
+    { name: 'Sem 3', present: 82, absent: 18 },
+    { name: 'Sem 4', present: 90, absent: 10 },
+    { name: 'Sem 5', present: 87, absent: 13 },
+    { name: 'Sem 6', present: 89, absent: 11 },
+  ];
+
+  const performanceData = [
+    { name: 'Sem 1', attendance: 85, marks: 78, average: 75 },
+    { name: 'Sem 2', attendance: 88, marks: 82, average: 78 },
+    { name: 'Sem 3', attendance: 82, marks: 76, average: 74 },
+    { name: 'Sem 4', attendance: 90, marks: 85, average: 80 },
+    { name: 'Sem 5', attendance: 87, marks: 83, average: 79 },
+    { name: 'Sem 6', attendance: 89, marks: 86, average: 82 },
+  ];
+
   return (
     <div className="w-full max-w-full overflow-hidden">
       <div className="space-y-4 sm:space-y-6">
@@ -112,22 +131,11 @@ export const HODDashboard: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg flex items-center gap-2">
-                    <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Department Attendance Overview
-                  </CardTitle>
-                  <CardDescription className="text-xs sm:text-sm">
-                    Monthly attendance trends across all semesters
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64 sm:h-80">
-                    <AttendanceChart />
-                  </div>
-                </CardContent>
-              </Card>
+              <AttendanceChart 
+                title="Department Attendance Overview"
+                description="Monthly attendance trends across all semesters"
+                data={attendanceData}
+              />
             </motion.div>
 
             {/* Performance Chart */}
@@ -136,22 +144,11 @@ export const HODDashboard: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-lg flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Academic Performance
-                  </CardTitle>
-                  <CardDescription className="text-xs sm:text-sm">
-                    Semester-wise performance analysis
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64 sm:h-80">
-                    <PerformanceChart />
-                  </div>
-                </CardContent>
-              </Card>
+              <PerformanceChart 
+                title="Academic Performance"
+                description="Semester-wise performance analysis"
+                data={performanceData}
+              />
             </motion.div>
           </div>
 
