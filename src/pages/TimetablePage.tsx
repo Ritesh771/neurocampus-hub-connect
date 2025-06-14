@@ -122,60 +122,70 @@ const TimetablePage: React.FC = () => {
                 View and manage class schedules across the week
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-2 sm:p-6">
-              <ScrollArea className="w-full">
-                <div className="min-w-[800px]">
-                  <div className="grid grid-cols-6 gap-2 mb-4">
-                    <div className="font-semibold text-center p-2 text-xs sm:text-sm">Time</div>
-                    {days.map(day => (
-                      <div key={day} className="font-semibold text-center p-2 bg-gray-50 rounded text-xs sm:text-sm">
-                        {day}
+            <CardContent className="p-0">
+              <div className="w-full overflow-x-auto">
+                <ScrollArea className="w-full">
+                  <div className="min-w-[900px] p-4">
+                    {/* Header Row */}
+                    <div className="grid grid-cols-6 gap-2 mb-4 sticky top-0 bg-white z-10">
+                      <div className="font-semibold text-center p-3 text-sm bg-gray-100 rounded border">
+                        Time
                       </div>
-                    ))}
-                  </div>
-                  
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
-                    {timeSlots.map(timeSlot => (
-                      <div key={timeSlot} className="grid grid-cols-6 gap-2">
-                        <div className="font-medium text-xs sm:text-sm p-2 bg-gray-100 rounded text-center">
-                          {timeSlot}
+                      {days.map(day => (
+                        <div key={day} className="font-semibold text-center p-3 bg-blue-50 rounded border text-sm">
+                          {day}
                         </div>
-                        {days.map(day => {
-                          const classForSlot = filteredTimetable.find(
-                            entry => entry.day === day && entry.time === timeSlot
-                          );
-                          return (
-                            <div key={`${day}-${timeSlot}`} className="min-h-[80px] border rounded p-2">
-                              {classForSlot ? (
-                                <div className="space-y-1">
-                                  <div className="font-medium text-xs text-blue-600 truncate">
-                                    {classForSlot.subject}
+                      ))}
+                    </div>
+                    
+                    {/* Time Slots */}
+                    <div className="space-y-2">
+                      {timeSlots.map(timeSlot => (
+                        <div key={timeSlot} className="grid grid-cols-6 gap-2">
+                          <div className="font-medium text-sm p-3 bg-gray-50 rounded border text-center flex items-center justify-center min-h-[100px]">
+                            <span className="transform -rotate-90 sm:rotate-0 whitespace-nowrap">
+                              {timeSlot}
+                            </span>
+                          </div>
+                          {days.map(day => {
+                            const classForSlot = filteredTimetable.find(
+                              entry => entry.day === day && entry.time === timeSlot
+                            );
+                            return (
+                              <div key={`${day}-${timeSlot}`} className="min-h-[100px] border rounded p-3 bg-white hover:bg-gray-50 transition-colors">
+                                {classForSlot ? (
+                                  <div className="space-y-2 h-full flex flex-col">
+                                    <div className="font-medium text-sm text-blue-600 line-clamp-2">
+                                      {classForSlot.subject}
+                                    </div>
+                                    <div className="text-xs text-gray-600 line-clamp-1">
+                                      {classForSlot.faculty}
+                                    </div>
+                                    <div className="text-xs text-gray-500 line-clamp-1">
+                                      {classForSlot.room}
+                                    </div>
+                                    <div className="mt-auto">
+                                      <Badge variant="outline" className="text-xs">
+                                        Sem {classForSlot.semester}-{classForSlot.section}
+                                      </Badge>
+                                    </div>
                                   </div>
-                                  <div className="text-xs text-gray-600 truncate">
-                                    {classForSlot.faculty}
+                                ) : (
+                                  <div className="h-full flex items-center justify-center">
+                                    <Button variant="ghost" size="sm" className="text-xs h-8 w-8 p-0 hover:bg-blue-50">
+                                      <Plus className="h-4 w-4 text-gray-400" />
+                                    </Button>
                                   </div>
-                                  <div className="text-xs text-gray-500 truncate">
-                                    {classForSlot.room}
-                                  </div>
-                                  <Badge variant="outline" className="text-xs">
-                                    Sem {classForSlot.semester}-{classForSlot.section}
-                                  </Badge>
-                                </div>
-                              ) : (
-                                <div className="h-full flex items-center justify-center">
-                                  <Button variant="ghost" size="sm" className="text-xs h-6">
-                                    <Plus className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ))}
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </ScrollArea>
+                </ScrollArea>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
@@ -193,15 +203,15 @@ const TimetablePage: React.FC = () => {
             <CardContent>
               <div className="space-y-3">
                 {filteredTimetable.slice(0, 3).map((entry, index) => (
-                  <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                  <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-sm truncate">{entry.subject}</div>
                       <div className="text-xs text-gray-600 truncate">
                         {entry.day}, {entry.time} • {entry.faculty} • {entry.room}
                       </div>
                     </div>
-                    <Button variant="ghost" size="sm">
-                      <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
+                    <Button variant="ghost" size="sm" className="ml-2 flex-shrink-0">
+                      <Edit className="h-4 w-4" />
                     </Button>
                   </div>
                 ))}
