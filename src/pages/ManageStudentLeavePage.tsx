@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,14 +9,36 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Search, Calendar, Clock, Check, X, Eye } from 'lucide-react';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+
+interface LeaveApplication {
+  id: number;
+  studentName: string;
+  usn: string;
+  leaveType: string;
+  startDate: string;
+  endDate: string;
+  reason: string;
+  status: 'pending' | 'approved' | 'rejected';
+  appliedDate: string;
+  documents: string[];
+  rejectionReason?: string;
+}
 
 const ManageStudentLeavePage: React.FC = () => {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedApplication, setSelectedApplication] = useState<LeaveApplication | null>(null);
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
+  const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
 
-  // Mock data
-  const leaveApplications = [
+  // Use local storage for persistent data
+  const [leaveApplications, setLeaveApplications] = useLocalStorage<LeaveApplication[]>('leaveApplications', [
     {
       id: 1,
       studentName: 'John Doe',
@@ -65,7 +88,7 @@ const ManageStudentLeavePage: React.FC = () => {
       appliedDate: '2024-01-24',
       documents: ['surgery_appointment.pdf', 'doctor_note.pdf']
     },
-  ];
+  ]);
 
   const filteredApplications = leaveApplications.filter(app => {
     const matchesSearch = 
@@ -88,26 +111,52 @@ const ManageStudentLeavePage: React.FC = () => {
     }
   };
 
-  const handleApprove = (application: any) => {
+  const handleApprove = (application: LeaveApplication) => {
+    setLeaveApplications(prev => 
+      prev.map(app => 
+        app.id === application.id 
+          ? { ...app, status: 'approved' as const }
+          : app
+      )
+    );
     toast({
       title: "Leave Approved",
       description: `Leave application for ${application.studentName} has been approved.`,
     });
   };
 
-  const handleReject = (application: any) => {
+  const handleReject = (application: LeaveApplication) => {
+    if (!rejectionReason.trim()) {
+      toast({
+        title: "Rejection Reason Required",
+        description: "Please provide a reason for rejecting the leave application.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLeaveApplications(prev => 
+      prev.map(app => 
+        app.id === application.id 
+          ? { ...app, status: 'rejected' as const, rejectionReason }
+          : app
+      )
+    );
+    
     toast({
       title: "Leave Rejected",
       description: `Leave application for ${application.studentName} has been rejected.`,
       variant: "destructive"
     });
+    
+    setRejectionReason('');
+    setIsRejectDialogOpen(false);
+    setSelectedApplication(null);
   };
 
-  const handleViewDetails = (application: any) => {
-    toast({
-      title: "View Details",
-      description: `Viewing details for ${application.studentName}'s leave application.`,
-    });
+  const handleViewDetails = (application: LeaveApplication) => {
+    setSelectedApplication(application);
+    setIsDetailDialogOpen(true);
   };
 
   const calculateDays = (startDate: string, endDate: string) => {
@@ -325,15 +374,54 @@ const ManageStudentLeavePage: React.FC = () => {
                               <Check className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
                               <span className="truncate">Approve</span>
                             </Button>
-                            <Button 
-                              size="sm" 
-                              variant="destructive"
-                              onClick={() => handleReject(application)}
-                              className="flex-1 sm:flex-none text-xs sm:text-sm min-w-0"
-                            >
-                              <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
-                              <span className="truncate">Reject</span>
-                            </Button>
+                            <Dialog open={isRejectDialogOpen} onOpenChange={setIsRejectDialogOpen}>
+                              <DialogTrigger asChild>
+                                <Button 
+                                  size="sm" 
+                                  variant="destructive"
+                                  onClick={() => setSelectedApplication(application)}
+                                  className="flex-1 sm:flex-none text-xs sm:text-sm min-w-0"
+                                >
+                                  <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
+                                  <span className="truncate">Reject</span>
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>Reject Leave Application</DialogTitle>
+                                  <DialogDescription>
+                                    Please provide a reason for rejecting {selectedApplication?.studentName}'s leave application.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                  <div>
+                                    <Label htmlFor="rejectionReason">Rejection Reason</Label>
+                                    <Textarea
+                                      id="rejectionReason"
+                                      value={rejectionReason}
+                                      onChange={(e) => setRejectionReason(e.target.value)}
+                                      placeholder="Enter reason for rejection..."
+                                      className="mt-1"
+                                    />
+                                  </div>
+                                  <div className="flex gap-2 justify-end">
+                                    <Button variant="outline" onClick={() => {
+                                      setIsRejectDialogOpen(false);
+                                      setRejectionReason('');
+                                      setSelectedApplication(null);
+                                    }}>
+                                      Cancel
+                                    </Button>
+                                    <Button 
+                                      variant="destructive" 
+                                      onClick={() => selectedApplication && handleReject(selectedApplication)}
+                                    >
+                                      Reject Application
+                                    </Button>
+                                  </div>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
                           </>
                         )}
                       </div>
@@ -359,6 +447,78 @@ const ManageStudentLeavePage: React.FC = () => {
           )}
         </motion.div>
       </div>
+
+      {/* Detail Dialog */}
+      <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Leave Application Details</DialogTitle>
+            <DialogDescription>
+              Complete information about the leave application
+            </DialogDescription>
+          </DialogHeader>
+          {selectedApplication && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Student Name</Label>
+                  <p className="font-medium">{selectedApplication.studentName}</p>
+                </div>
+                <div>
+                  <Label>USN</Label>
+                  <p className="font-medium">{selectedApplication.usn}</p>
+                </div>
+                <div>
+                  <Label>Leave Type</Label>
+                  <p className="font-medium">{selectedApplication.leaveType}</p>
+                </div>
+                <div>
+                  <Label>Status</Label>
+                  <Badge className={getStatusInfo(selectedApplication.status).color}>
+                    {getStatusInfo(selectedApplication.status).label}
+                  </Badge>
+                </div>
+                <div>
+                  <Label>Start Date</Label>
+                  <p className="font-medium">{new Date(selectedApplication.startDate).toLocaleDateString()}</p>
+                </div>
+                <div>
+                  <Label>End Date</Label>
+                  <p className="font-medium">{new Date(selectedApplication.endDate).toLocaleDateString()}</p>
+                </div>
+                <div>
+                  <Label>Applied Date</Label>
+                  <p className="font-medium">{new Date(selectedApplication.appliedDate).toLocaleDateString()}</p>
+                </div>
+                <div>
+                  <Label>Total Days</Label>
+                  <p className="font-medium">{calculateDays(selectedApplication.startDate, selectedApplication.endDate)}</p>
+                </div>
+              </div>
+              <div>
+                <Label>Reason</Label>
+                <p className="mt-1 p-3 bg-gray-50 rounded-md">{selectedApplication.reason}</p>
+              </div>
+              {selectedApplication.documents.length > 0 && (
+                <div>
+                  <Label>Documents</Label>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {selectedApplication.documents.map((doc, idx) => (
+                      <Badge key={idx} variant="outline">{doc}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {selectedApplication.rejectionReason && (
+                <div>
+                  <Label>Rejection Reason</Label>
+                  <p className="mt-1 p-3 bg-red-50 text-red-700 rounded-md">{selectedApplication.rejectionReason}</p>
+                </div>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
