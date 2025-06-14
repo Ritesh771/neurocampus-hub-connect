@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Search, Calendar, Clock, Check, X, Eye } from 'lucide-react';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ManageStudentLeavePage: React.FC = () => {
   const { toast } = useToast();
@@ -125,236 +126,240 @@ const ManageStudentLeavePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6 max-w-full overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
-              Manage Student Leaves
-            </h1>
-            <p className="text-sm sm:text-base text-gray-600 mt-1">
-              Review and manage student leave applications
-            </p>
+    <div className="w-full max-w-full overflow-hidden">
+      <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold tracking-tight text-gray-900 truncate">
+                Manage Student Leaves
+              </h1>
+              <p className="text-xs sm:text-sm lg:text-base text-gray-600 mt-1">
+                Review and manage student leave applications
+              </p>
+            </div>
+            <Badge variant="outline" className="flex items-center gap-1 sm:gap-2 w-fit flex-shrink-0 text-xs sm:text-sm">
+              <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
+              {statusCounts.pending} Pending
+            </Badge>
           </div>
-          <Badge variant="outline" className="flex items-center gap-2 w-fit">
-            <Calendar className="h-4 w-4" />
-            {statusCounts.pending} Pending
-          </Badge>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Summary Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4"
-      >
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-yellow-600">{statusCounts.pending}</p>
+        {/* Summary Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4"
+        >
+          <Card>
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center justify-between">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-gray-600">Pending</p>
+                  <p className="text-lg sm:text-2xl font-bold text-yellow-600">{statusCounts.pending}</p>
+                </div>
+                <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-600 flex-shrink-0" />
               </div>
-              <Clock className="h-8 w-8 text-yellow-600" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Approved</p>
-                <p className="text-2xl font-bold text-green-600">{statusCounts.approved}</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center justify-between">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-gray-600">Approved</p>
+                  <p className="text-lg sm:text-2xl font-bold text-green-600">{statusCounts.approved}</p>
+                </div>
+                <Check className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 flex-shrink-0" />
               </div>
-              <Check className="h-8 w-8 text-green-600" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Rejected</p>
-                <p className="text-2xl font-bold text-red-600">{statusCounts.rejected}</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center justify-between">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs sm:text-sm text-gray-600">Rejected</p>
+                  <p className="text-lg sm:text-2xl font-bold text-red-600">{statusCounts.rejected}</p>
+                </div>
+                <X className="h-6 w-6 sm:h-8 sm:w-8 text-red-600 flex-shrink-0" />
               </div>
-              <X className="h-8 w-8 text-red-600" />
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-      {/* Filters */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Filters</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  placeholder="Search students..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base sm:text-lg">Filters</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-3 w-3 sm:h-4 sm:w-4" />
+                  <Input
+                    placeholder="Search students..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-8 sm:pl-10 text-sm"
+                  />
+                </div>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="text-sm">
+                    <SelectValue placeholder="All Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Status</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-      {/* Leave Applications */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="space-y-4"
-      >
-        {filteredApplications.map((application, index) => {
-          const statusInfo = getStatusInfo(application.status);
-          const totalDays = calculateDays(application.startDate, application.endDate);
-          
-          return (
-            <motion.div
-              key={application.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-            >
-              <Card className="hover:shadow-md transition-shadow">
-                <CardHeader>
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                    <div className="flex-1">
-                      <CardTitle className="text-lg">{application.studentName}</CardTitle>
-                      <CardDescription>
-                        {application.usn} • {application.leaveType} Leave • {totalDays} day{totalDays > 1 ? 's' : ''}
-                      </CardDescription>
-                    </div>
-                    <Badge className={statusInfo.color}>
-                      {statusInfo.label}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {/* Leave Details */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm text-gray-600">Leave Period</p>
-                        <p className="font-medium">
-                          {new Date(application.startDate).toLocaleDateString()} - {new Date(application.endDate).toLocaleDateString()}
-                        </p>
+        {/* Leave Applications */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="space-y-3 sm:space-y-4"
+        >
+          {filteredApplications.map((application, index) => {
+            const statusInfo = getStatusInfo(application.status);
+            const totalDays = calculateDays(application.startDate, application.endDate);
+            
+            return (
+              <motion.div
+                key={application.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                <Card className="hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-3">
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-base sm:text-lg truncate">{application.studentName}</CardTitle>
+                        <CardDescription className="text-xs sm:text-sm truncate">
+                          {application.usn} • {application.leaveType} Leave • {totalDays} day{totalDays > 1 ? 's' : ''}
+                        </CardDescription>
                       </div>
-                      <div>
-                        <p className="text-sm text-gray-600">Applied On</p>
-                        <p className="font-medium">{new Date(application.appliedDate).toLocaleDateString()}</p>
-                      </div>
+                      <Badge className={`${statusInfo.color} text-xs flex-shrink-0`}>
+                        {statusInfo.label}
+                      </Badge>
                     </div>
-
-                    {/* Reason */}
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">Reason</p>
-                      <p className="text-gray-900 bg-gray-50 p-3 rounded-md">{application.reason}</p>
-                    </div>
-
-                    {/* Documents */}
-                    {application.documents.length > 0 && (
-                      <div>
-                        <p className="text-sm text-gray-600 mb-2">Attached Documents</p>
-                        <div className="flex flex-wrap gap-2">
-                          {application.documents.map((doc, idx) => (
-                            <Badge key={idx} variant="outline">{doc}</Badge>
-                          ))}
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3 sm:space-y-4">
+                      {/* Leave Details */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                          <p className="text-xs sm:text-sm text-gray-600">Leave Period</p>
+                          <p className="font-medium text-xs sm:text-sm truncate">
+                            {new Date(application.startDate).toLocaleDateString()} - {new Date(application.endDate).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs sm:text-sm text-gray-600">Applied On</p>
+                          <p className="font-medium text-xs sm:text-sm">{new Date(application.appliedDate).toLocaleDateString()}</p>
                         </div>
                       </div>
-                    )}
 
-                    {/* Rejection Reason */}
-                    {application.status === 'rejected' && application.rejectionReason && (
+                      {/* Reason */}
                       <div>
-                        <p className="text-sm text-gray-600 mb-1">Rejection Reason</p>
-                        <p className="text-red-700 bg-red-50 p-3 rounded-md">{application.rejectionReason}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 mb-1">Reason</p>
+                        <ScrollArea className="max-h-20">
+                          <p className="text-gray-900 bg-gray-50 p-2 sm:p-3 rounded-md text-xs sm:text-sm">{application.reason}</p>
+                        </ScrollArea>
                       </div>
-                    )}
 
-                    {/* Actions */}
-                    <div className="flex flex-wrap gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => handleViewDetails(application)}
-                        className="flex-1 sm:flex-none"
-                      >
-                        <Eye className="h-4 w-4 mr-1" />
-                        Details
-                      </Button>
-                      
-                      {application.status === 'pending' && (
-                        <>
-                          <Button 
-                            size="sm"
-                            onClick={() => handleApprove(application)}
-                            className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700"
-                          >
-                            <Check className="h-4 w-4 mr-1" />
-                            Approve
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="destructive"
-                            onClick={() => handleReject(application)}
-                            className="flex-1 sm:flex-none"
-                          >
-                            <X className="h-4 w-4 mr-1" />
-                            Reject
-                          </Button>
-                        </>
+                      {/* Documents */}
+                      {application.documents.length > 0 && (
+                        <div>
+                          <p className="text-xs sm:text-sm text-gray-600 mb-2">Attached Documents</p>
+                          <div className="flex flex-wrap gap-1 sm:gap-2">
+                            {application.documents.map((doc, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs truncate max-w-[200px]">{doc}</Badge>
+                            ))}
+                          </div>
+                        </div>
                       )}
+
+                      {/* Rejection Reason */}
+                      {application.status === 'rejected' && application.rejectionReason && (
+                        <div>
+                          <p className="text-xs sm:text-sm text-gray-600 mb-1">Rejection Reason</p>
+                          <p className="text-red-700 bg-red-50 p-2 sm:p-3 rounded-md text-xs sm:text-sm">{application.rejectionReason}</p>
+                        </div>
+                      )}
+
+                      {/* Actions */}
+                      <div className="flex flex-wrap gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleViewDetails(application)}
+                          className="flex-1 sm:flex-none text-xs sm:text-sm min-w-0"
+                        >
+                          <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
+                          <span className="truncate">Details</span>
+                        </Button>
+                        
+                        {application.status === 'pending' && (
+                          <>
+                            <Button 
+                              size="sm"
+                              onClick={() => handleApprove(application)}
+                              className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 text-xs sm:text-sm min-w-0"
+                            >
+                              <Check className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
+                              <span className="truncate">Approve</span>
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="destructive"
+                              onClick={() => handleReject(application)}
+                              className="flex-1 sm:flex-none text-xs sm:text-sm min-w-0"
+                            >
+                              <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
+                              <span className="truncate">Reject</span>
+                            </Button>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+
+          {filteredApplications.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <Card>
+                <CardContent className="text-center py-6 sm:py-8">
+                  <Calendar className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3" />
+                  <p className="text-gray-500 text-sm sm:text-base">No leave applications found</p>
                 </CardContent>
               </Card>
             </motion.div>
-          );
-        })}
-
-        {filteredApplications.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <Card>
-              <CardContent className="text-center py-8">
-                <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-500">No leave applications found</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </motion.div>
+          )}
+        </motion.div>
+      </div>
     </div>
   );
 };
