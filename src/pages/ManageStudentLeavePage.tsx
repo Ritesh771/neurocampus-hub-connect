@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const ManageStudentLeavePage: React.FC = () => {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   // Mock data
   const leaveApplications = [
@@ -72,7 +71,7 @@ const ManageStudentLeavePage: React.FC = () => {
     const matchesSearch = 
       app.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.usn.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === '' || app.status === statusFilter;
+    const matchesStatus = statusFilter === 'all' || app.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -217,7 +216,7 @@ const ManageStudentLeavePage: React.FC = () => {
                     <SelectValue placeholder="All Status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Status</SelectItem>
+                    <SelectItem value="all">All Status</SelectItem>
                     <SelectItem value="pending">Pending</SelectItem>
                     <SelectItem value="approved">Approved</SelectItem>
                     <SelectItem value="rejected">Rejected</SelectItem>
