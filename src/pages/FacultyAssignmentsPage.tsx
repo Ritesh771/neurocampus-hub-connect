@@ -9,8 +9,8 @@ import { Save, Filter, Users, BookOpen } from 'lucide-react';
 
 const FacultyAssignmentsPage: React.FC = () => {
   const { toast } = useToast();
-  const [selectedSemester, setSelectedSemester] = useState('');
-  const [selectedSection, setSelectedSection] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('all');
+  const [selectedSection, setSelectedSection] = useState('all');
 
   // Mock data for faculty assignments
   const facultyAssignments = [
@@ -39,8 +39,8 @@ const FacultyAssignmentsPage: React.FC = () => {
   };
 
   const filteredAssignments = facultyAssignments.filter(assignment => {
-    if (selectedSemester && assignment.semester.toString() !== selectedSemester) return false;
-    if (selectedSection && assignment.section !== selectedSection) return false;
+    if (selectedSemester !== 'all' && assignment.semester.toString() !== selectedSemester) return false;
+    if (selectedSection !== 'all' && assignment.section !== selectedSection) return false;
     return true;
   });
 
@@ -88,7 +88,7 @@ const FacultyAssignmentsPage: React.FC = () => {
                   <SelectValue placeholder="Select Semester" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Semesters</SelectItem>
+                  <SelectItem value="all">All Semesters</SelectItem>
                   {[1, 2, 3, 4, 5, 6, 7, 8].map(sem => (
                     <SelectItem key={sem} value={sem.toString()}>Semester {sem}</SelectItem>
                   ))}
@@ -100,7 +100,7 @@ const FacultyAssignmentsPage: React.FC = () => {
                   <SelectValue placeholder="Select Section" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Sections</SelectItem>
+                  <SelectItem value="all">All Sections</SelectItem>
                   <SelectItem value="A">Section A</SelectItem>
                   <SelectItem value="B">Section B</SelectItem>
                   <SelectItem value="C">Section C</SelectItem>
