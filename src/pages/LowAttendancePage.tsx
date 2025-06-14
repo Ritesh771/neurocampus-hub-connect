@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { AlertTriangle, Bell, Search } from 'lucide-react';
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const LowAttendancePage: React.FC = () => {
   const { toast } = useToast();
@@ -43,7 +42,7 @@ const LowAttendancePage: React.FC = () => {
 
   return (
     <div className="w-full max-w-full overflow-hidden">
-      <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6">
+      <div className="space-y-4 sm:space-y-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,66 +96,40 @@ const LowAttendancePage: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="p-0">
-              <ScrollArea className="w-full">
-                <div className="min-w-[600px]">
-                  {/* Desktop Table Header */}
-                  <div className="hidden sm:grid grid-cols-6 gap-4 p-3 sm:p-4 bg-gray-50 border-b font-medium text-xs sm:text-sm text-gray-700">
-                    <div>Student Name</div>
-                    <div>USN</div>
-                    <div>Subject</div>
-                    <div>Semester</div>
-                    <div>Attendance %</div>
-                    <div>Actions</div>
-                  </div>
+              <div className="w-full overflow-hidden">
+                {/* Desktop Table Header */}
+                <div className="hidden sm:grid grid-cols-6 gap-2 sm:gap-4 p-3 sm:p-4 bg-gray-50 border-b font-medium text-xs sm:text-sm text-gray-700">
+                  <div className="truncate">Student Name</div>
+                  <div className="truncate">USN</div>
+                  <div className="truncate">Subject</div>
+                  <div className="truncate">Semester</div>
+                  <div className="truncate">Attendance %</div>
+                  <div className="truncate">Actions</div>
+                </div>
 
-                  {/* Table Body */}
-                  <div className="max-h-96 overflow-y-auto">
-                    {filteredStudents.length > 0 ? (
-                      filteredStudents.map((student, index) => (
-                        <motion.div
-                          key={student.id}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: index * 0.1 }}
-                          className="border-b hover:bg-gray-50 transition-colors"
-                        >
-                          {/* Desktop View */}
-                          <div className="hidden sm:grid grid-cols-6 gap-4 p-3 sm:p-4">
-                            <div className="font-medium text-gray-900 text-xs sm:text-sm truncate">{student.name}</div>
-                            <div className="text-gray-600 text-xs sm:text-sm">{student.usn}</div>
-                            <div className="text-gray-700 text-xs sm:text-sm truncate">{student.subject}</div>
-                            <div className="text-gray-600 text-xs sm:text-sm">Sem {student.semester}</div>
-                            <div>
-                              <Badge variant={getAttendanceBadgeColor(student.attendance)} className="text-xs">
-                                {student.attendance}%
-                              </Badge>
-                            </div>
-                            <div>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleNotifyStudent(student.name, student.usn)}
-                                className="flex items-center gap-1 text-xs"
-                              >
-                                <Bell className="h-3 w-3" />
-                                Notify
-                              </Button>
-                            </div>
+                {/* Table Body */}
+                <div className="max-h-96 overflow-y-auto">
+                  {filteredStudents.length > 0 ? (
+                    filteredStudents.map((student, index) => (
+                      <motion.div
+                        key={student.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="border-b hover:bg-gray-50 transition-colors"
+                      >
+                        {/* Desktop View */}
+                        <div className="hidden sm:grid grid-cols-6 gap-2 sm:gap-4 p-3 sm:p-4 items-center">
+                          <div className="font-medium text-gray-900 text-xs sm:text-sm truncate">{student.name}</div>
+                          <div className="text-gray-600 text-xs sm:text-sm truncate">{student.usn}</div>
+                          <div className="text-gray-700 text-xs sm:text-sm truncate">{student.subject}</div>
+                          <div className="text-gray-600 text-xs sm:text-sm">Sem {student.semester}</div>
+                          <div>
+                            <Badge variant={getAttendanceBadgeColor(student.attendance)} className="text-xs">
+                              {student.attendance}%
+                            </Badge>
                           </div>
-
-                          {/* Mobile View */}
-                          <div className="sm:hidden p-3 sm:p-4 space-y-2">
-                            <div className="flex justify-between items-start">
-                              <div className="min-w-0 flex-1">
-                                <div className="font-medium text-gray-900 text-sm truncate">{student.name}</div>
-                                <div className="text-xs text-gray-600 truncate">{student.usn}</div>
-                              </div>
-                              <Badge variant={getAttendanceBadgeColor(student.attendance)} className="text-xs flex-shrink-0">
-                                {student.attendance}%
-                              </Badge>
-                            </div>
-                            <div className="text-xs text-gray-700 truncate">{student.subject}</div>
-                            <div className="text-xs text-gray-600">Semester {student.semester}</div>
+                          <div>
                             <Button
                               size="sm"
                               variant="outline"
@@ -164,20 +137,44 @@ const LowAttendancePage: React.FC = () => {
                               className="flex items-center gap-1 text-xs w-full"
                             >
                               <Bell className="h-3 w-3" />
-                              Notify Student
+                              Notify
                             </Button>
                           </div>
-                        </motion.div>
-                      ))
-                    ) : (
-                      <div className="p-6 sm:p-8 text-center text-gray-500">
-                        <AlertTriangle className="h-8 w-8 sm:h-12 sm:w-12 mx-auto mb-4 text-gray-300" />
-                        <p className="text-sm">No students found matching your search criteria</p>
-                      </div>
-                    )}
-                  </div>
+                        </div>
+
+                        {/* Mobile View */}
+                        <div className="sm:hidden p-3 sm:p-4 space-y-2">
+                          <div className="flex justify-between items-start">
+                            <div className="min-w-0 flex-1">
+                              <div className="font-medium text-gray-900 text-sm truncate">{student.name}</div>
+                              <div className="text-xs text-gray-600 truncate">{student.usn}</div>
+                            </div>
+                            <Badge variant={getAttendanceBadgeColor(student.attendance)} className="text-xs flex-shrink-0">
+                              {student.attendance}%
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-gray-700 truncate">{student.subject}</div>
+                          <div className="text-xs text-gray-600">Semester {student.semester}</div>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleNotifyStudent(student.name, student.usn)}
+                            className="flex items-center gap-1 text-xs w-full"
+                          >
+                            <Bell className="h-3 w-3" />
+                            Notify Student
+                          </Button>
+                        </div>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <div className="p-6 sm:p-8 text-center text-gray-500">
+                      <AlertTriangle className="h-8 w-8 sm:h-12 sm:w-12 mx-auto mb-4 text-gray-300" />
+                      <p className="text-sm">No students found matching your search criteria</p>
+                    </div>
+                  )}
                 </div>
-              </ScrollArea>
+              </div>
             </CardContent>
           </Card>
         </motion.div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar, Clock, User, CheckCircle, XCircle } from 'lucide-react';
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface LeaveRequest {
   id: string;
@@ -21,7 +19,7 @@ interface LeaveRequest {
 }
 
 const HODLeavesPage: React.FC = () => {
-  const { toast } = useToast();
+  const {toast} = useToast();
   const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([
     {
       id: '1',
@@ -104,12 +102,11 @@ const HODLeavesPage: React.FC = () => {
   };
 
   const pendingRequests = leaveRequests.filter(req => req.status === 'pending');
-  const processedRequests = leaveRequests.filter(req => req.status !== 'pending');
 
   return (
     <div className="w-full max-w-full overflow-hidden">
       <motion.div 
-        className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6"
+        className="space-y-4 sm:space-y-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -137,7 +134,7 @@ const HODLeavesPage: React.FC = () => {
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-500/20 flex items-center justify-center flex-shrink-0">
                   <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-600" />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="text-lg sm:text-2xl font-bold text-yellow-900">{pendingRequests.length}</p>
                   <p className="text-xs sm:text-sm text-yellow-700 truncate">Pending Requests</p>
                 </div>
@@ -151,7 +148,7 @@ const HODLeavesPage: React.FC = () => {
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                   <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="text-lg sm:text-2xl font-bold text-green-900">
                     {leaveRequests.filter(req => req.status === 'approved').length}
                   </p>
@@ -167,7 +164,7 @@ const HODLeavesPage: React.FC = () => {
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
                   <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" />
                 </div>
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="text-lg sm:text-2xl font-bold text-red-900">
                     {leaveRequests.filter(req => req.status === 'rejected').length}
                   </p>
@@ -229,7 +226,7 @@ const HODLeavesPage: React.FC = () => {
                           </div>
                           
                           <div className="bg-gray-50 rounded p-2 sm:p-3">
-                            <p className="text-xs sm:text-sm"><strong>Reason:</strong> {request.reason}</p>
+                            <p className="text-xs sm:text-sm"><strong>Reason:</strong> <span className="break-words">{request.reason}</span></p>
                           </div>
                         </div>
                         
@@ -275,33 +272,31 @@ const HODLeavesPage: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="w-full">
-                <div className="space-y-3">
-                  {leaveRequests.map((request, index) => (
-                    <motion.div
-                      key={request.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.05 * index, duration: 0.3 }}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 border rounded-lg hover:bg-gray-50 transition-colors gap-2"
-                    >
-                      <div className="space-y-1 flex-1 min-w-0">
-                        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-                          <h4 className="font-medium text-sm sm:text-base truncate">{request.name}</h4>
-                          {getStatusBadge(request.status)}
-                        </div>
-                        <p className="text-xs sm:text-sm text-gray-600 truncate">{request.department}</p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {request.startDate} to {request.endDate} ({request.days} days)
-                        </p>
+              <div className="space-y-3 max-h-96 overflow-y-auto">
+                {leaveRequests.map((request, index) => (
+                  <motion.div
+                    key={request.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 * index, duration: 0.3 }}
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 border rounded-lg hover:bg-gray-50 transition-colors gap-2"
+                  >
+                    <div className="space-y-1 flex-1 min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        <h4 className="font-medium text-sm sm:text-base truncate">{request.name}</h4>
+                        {getStatusBadge(request.status)}
                       </div>
-                      <div className="text-xs sm:text-sm text-gray-500 flex-shrink-0">
-                        Applied: {request.appliedDate}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </ScrollArea>
+                      <p className="text-xs sm:text-sm text-gray-600 truncate">{request.department}</p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {request.startDate} to {request.endDate} ({request.days} days)
+                      </p>
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-500 flex-shrink-0">
+                      Applied: {request.appliedDate}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </motion.div>

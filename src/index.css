@@ -5,85 +5,74 @@
 
 @layer base {
   :root {
-    --background: 250 100% 99%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 262 60% 50%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
-
-    --secondary: 260 30% 94%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 249 39% 95%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 262 60% 50%;
-
+    --ring: 221.2 83.2% 53.3%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-
-    /* Sidebar Variables */
-    --sidebar-background: 255 255 255;
-    --sidebar-foreground: 222.2 84% 4.9%;
-    --sidebar-primary: 262 60% 50%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 249 39% 95%;
-    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
-    --sidebar-border: 214.3 31.8% 91.4%;
-    --sidebar-ring: 262 60% 50%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 262 60% 50%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-
-    /* Dark Sidebar Variables */
-    --sidebar-background: 217.2 32.6% 17.5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 262 60% 50%;
-    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 224.3 76.3% 48%;
+    --ring: 224.3 76.3% 94.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 94.1%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -91,82 +80,63 @@
   * {
     @apply border-border;
   }
-
+  
   body {
     @apply bg-background text-foreground;
-    font-size: 14px;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
-
-  @media (min-width: 640px) {
-    body {
-      font-size: 16px;
+  
+  /* Prevent horizontal scrolling globally */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  /* Ensure all containers respect width limits */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Mobile-specific fixes */
+  @media (max-width: 768px) {
+    .truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-  }
-
-  .neurocampus-gradient {
-    @apply bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600;
-  }
-  
-  .edu-card {
-    @apply bg-white rounded-lg p-3 sm:p-4 shadow-md hover:shadow-lg transition-shadow duration-300;
-  }
-  
-  .stat-card {
-    @apply border border-gray-200 rounded-lg p-3 sm:p-4 hover:border-primary/50 transition-colors;
-  }
-
-  /* Mobile-first responsive utilities */
-  .mobile-container {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
-
-  .mobile-text {
-    @apply text-sm sm:text-base;
-  }
-
-  .mobile-heading {
-    @apply text-lg sm:text-xl lg:text-2xl;
-  }
-
-  .mobile-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6;
-  }
-
-  /* Logo specific styles */
-  .logo-container img {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  }
-
-  /* Sidebar specific fixes */
-  [data-sidebar="sidebar"] {
-    background-color: hsl(var(--sidebar-background)) !important;
-    border-right: 1px solid hsl(var(--sidebar-border));
-  }
-
-  .sidebar-content {
-    background-color: hsl(var(--sidebar-background)) !important;
+    
+    /* Prevent content from overflowing on mobile */
+    .container, .max-w-full, .w-full {
+      max-width: 100vw !important;
+    }
+    
+    /* Fix table overflow on mobile */
+    table, .table-container {
+      width: 100%;
+      table-layout: fixed;
+    }
+    
+    /* Ensure grid items don't overflow */
+    .grid > * {
+      min-width: 0;
+    }
   }
 }
 
-@layer utilities {
-  .animate-fade-in {
-    animation: fade-in 0.3s ease-out;
-  }
-  
-  .animate-pulse-soft {
-    animation: pulse-soft 2s ease-in-out infinite;
-  }
+.neurocampus-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 
-  /* Mobile-first spacing utilities */
-  .space-mobile {
-    @apply space-y-3 sm:space-y-4 lg:space-y-6;
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
   }
+  50% {
+    opacity: 0.8;
+  }
+}
 
-  .padding-mobile {
-    @apply p-3 sm:p-4 lg:p-6;
-  }
-
-  .margin-mobile {
-    @apply m-3 sm:m-4 lg:m-6;
-  }
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
 }
