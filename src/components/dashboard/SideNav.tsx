@@ -110,18 +110,18 @@ export const SideNav: React.FC = () => {
   };
 
   return (
-    <Sidebar>
-      <SidebarHeader className="p-4">
+    <Sidebar className="border-r bg-white">
+      <SidebarHeader className="p-4 bg-white border-b">
         <div className="flex items-center gap-3">
           <Logo size="sm" className="h-8 w-8" />
           <div className="flex flex-col">
-            <span className="font-semibold text-sm">NeuroCampus</span>
-            <span className="text-xs text-muted-foreground">AMC College</span>
+            <span className="font-semibold text-sm text-gray-900">NeuroCampus</span>
+            <span className="text-xs text-gray-600">AMC College</span>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-2">
+      <SidebarContent className="px-2 bg-white">
         <SidebarMenu>
           {userNavItems.map((item, index) => {
             const isActive = location.pathname === item.href;
@@ -139,6 +139,10 @@ export const SideNav: React.FC = () => {
                     asChild
                     isActive={isActive}
                     onClick={handleLinkClick}
+                    className={cn(
+                      "w-full justify-start gap-3 px-3 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                      isActive && "bg-primary text-primary-foreground hover:bg-primary/90"
+                    )}
                   >
                     <Link to={item.href} className="flex items-center gap-3">
                       <Icon className="h-4 w-4" />
@@ -152,20 +156,20 @@ export const SideNav: React.FC = () => {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
+      <SidebarFooter className="p-4 bg-white border-t">
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-muted/50">
-            <UserCircle className="h-6 w-6 text-muted-foreground" />
+          <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50">
+            <UserCircle className="h-6 w-6 text-gray-600" />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{user.name}</p>
-              <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
+              <p className="text-sm font-medium truncate text-gray-900">{user.name}</p>
+              <p className="text-xs text-gray-600 capitalize">{user.role}</p>
             </div>
           </div>
           <Button
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-start gap-2"
+            className="w-full justify-start gap-2 border-gray-200 text-gray-700 hover:bg-gray-50"
           >
             <LogOut className="h-4 w-4" />
             Logout
