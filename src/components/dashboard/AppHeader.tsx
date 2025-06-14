@@ -12,15 +12,15 @@ export const AppHeader: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <header className="bg-white border-b shadow-sm sticky top-0 z-40">
-      <div className="flex h-14 sm:h-16 items-center px-3 sm:px-4 lg:px-6">
+    <header className="bg-white border-b shadow-sm sticky top-0 z-40 w-full">
+      <div className="flex h-14 sm:h-16 items-center px-3 sm:px-4 lg:px-6 w-full">
         {/* Mobile menu trigger */}
-        <SidebarTrigger className="lg:hidden mr-2 h-8 w-8 sm:h-9 sm:w-9" />
+        <SidebarTrigger className="lg:hidden mr-2 h-8 w-8 sm:h-9 sm:w-9 flex-shrink-0" />
 
         {/* Logo and Brand */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-1 lg:flex-initial">
-          <Logo size="sm" className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
-          <div className="hidden sm:block">
+        <div className="flex items-center gap-2 sm:gap-3 flex-1 lg:flex-initial min-w-0">
+          <Logo size="sm" className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 flex-shrink-0" />
+          <div className="hidden sm:block min-w-0">
             <div className="flex flex-col">
               <span className="font-semibold text-sm lg:text-base truncate">NeuroCampus</span>
               <span className="text-xs text-gray-500 hidden md:block">AMC College</span>
@@ -29,12 +29,12 @@ export const AppHeader: React.FC = () => {
         </div>
 
         {/* Search & Actions */}
-        <div className="ml-auto flex items-center gap-1 sm:gap-2 md:gap-4">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2 md:gap-4 flex-shrink-0">
           {/* Search toggle for mobile */}
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden h-8 w-8"
+            className="md:hidden h-8 w-8 flex-shrink-0"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
           >
             <Search className="h-4 w-4" />
@@ -51,7 +51,7 @@ export const AppHeader: React.FC = () => {
           </div>
 
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9">
+          <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-9 sm:w-9 flex-shrink-0">
             <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
             <span className="sr-only">Notifications</span>
           </Button>
@@ -65,7 +65,7 @@ export const AppHeader: React.FC = () => {
       
       {/* Mobile search expanded */}
       {isSearchOpen && (
-        <div className="px-3 sm:px-4 pb-3 md:hidden border-t bg-gray-50">
+        <div className="px-3 sm:px-4 pb-3 md:hidden border-t bg-gray-50 w-full">
           <Input type="search" placeholder="Search..." className="w-full mt-3 text-sm" />
         </div>
       )}

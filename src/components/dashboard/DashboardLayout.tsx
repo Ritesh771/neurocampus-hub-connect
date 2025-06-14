@@ -30,16 +30,16 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gray-50">
-        <Sidebar className="border-r hidden lg:flex">
-          <SidebarContent>
+      <div className="min-h-screen flex w-full bg-gray-50 overflow-hidden">
+        <Sidebar className="border-r bg-white">
+          <SidebarContent className="overflow-y-auto">
             <SideNav />
           </SidebarContent>
         </Sidebar>
-        <SidebarInset className="flex-1">
+        <SidebarInset className="flex-1 flex flex-col min-w-0">
           <AppHeader />
-          <main className="flex-1 overflow-y-auto h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)]">
-            <div className="p-3 sm:p-4 md:p-6 max-w-full">
+          <main className="flex-1 overflow-y-auto">
+            <div className="p-3 sm:p-4 md:p-6 w-full max-w-full">
               <Outlet />
             </div>
           </main>
