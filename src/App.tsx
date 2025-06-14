@@ -26,6 +26,9 @@ import BranchesPage from "./pages/BranchesPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import HODLeavesPage from "./pages/HODLeavesPage";
 import ProfilePage from "./pages/ProfilePage";
+import LowAttendancePage from "./pages/LowAttendancePage";
+import AcademicStructurePage from "./pages/AcademicStructurePage";
+import FacultyAssignmentsPage from "./pages/FacultyAssignmentsPage";
 
 const queryClient = new QueryClient();
 
@@ -43,12 +46,21 @@ const App = () => (
             {/* Dashboard routes - protected by DashboardLayout */}
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
+              
+              {/* Admin routes */}
               <Route path="users" element={<UsersPage />} />
               <Route path="enroll-user" element={<EnrollUserPage />} />
               <Route path="bulk-upload" element={<BulkUploadPage />} />
               <Route path="branches" element={<BranchesPage />} />
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="hod-leaves" element={<HODLeavesPage />} />
+              
+              {/* HOD routes */}
+              <Route path="low-attendance" element={<LowAttendancePage />} />
+              <Route path="academic-structure" element={<AcademicStructurePage />} />
+              <Route path="faculty-assignments" element={<FacultyAssignmentsPage />} />
+              
+              {/* Common routes */}
               <Route path="departments" element={<DepartmentsPage />} />
               <Route path="faculty" element={<FacultyPage />} />
               <Route path="students" element={<StudentsPage />} />
