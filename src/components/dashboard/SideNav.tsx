@@ -4,7 +4,16 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Logo } from '@/components/ui/logo';
 import { useAuth } from '@/context/AuthContext';
-import { useSidebar } from '@/components/ui/sidebar';
+import { 
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar 
+} from '@/components/ui/sidebar';
 
 interface NavItem {
   name: string;
@@ -151,46 +160,43 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
   };
 
   return (
-    <div className={cn("flex flex-col h-full bg-white border-r", className)}>
-      <div className="flex flex-col flex-grow p-3 sm:p-4 overflow-y-auto">
-        <div className="flex items-center pb-3 sm:pb-4 mb-3 sm:mb-4 border-b">
+    <Sidebar className={className}>
+      <SidebarHeader className="border-b">
+        <div className="flex items-center p-3 sm:p-4">
           <Logo size="sm" className="h-8 sm:h-10" />
           <div className="ml-3">
             <h2 className="text-base sm:text-lg font-semibold">NeuroCampus</h2>
             <p className="text-xs text-gray-500">{user?.role.charAt(0).toUpperCase() + user?.role.slice(1)} Portal</p>
           </div>
         </div>
+      </SidebarHeader>
 
-        <nav className="flex-1 space-y-1">
+      <SidebarContent className="flex-1 overflow-y-auto">
+        <SidebarMenu className="space-y-1 p-3 sm:p-4">
           {filteredNavigation.map((item) => {
             const isActive = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`);
             
             return (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={handleNavClick}
-                className={cn(
-                  isActive
-                    ? "bg-secondary text-primary font-medium"
-                    : "text-gray-600 hover:bg-gray-50",
-                  "group flex items-center px-2 sm:px-3 py-2 text-sm rounded-md transition-colors"
-                )}
-              >
-                <div className={cn(
-                  isActive ? "text-primary" : "text-gray-500 group-hover:text-gray-700",
-                  "mr-2 sm:mr-3 flex-shrink-0"
-                )}>
-                  {item.icon}
-                </div>
-                <span className="truncate">{item.name}</span>
-              </Link>
+              <SidebarMenuItem key={item.name}>
+                <SidebarMenuButton asChild isActive={isActive}>
+                  <Link
+                    to={item.href}
+                    onClick={handleNavClick}
+                    className="flex items-center px-2 sm:px-3 py-2 text-sm rounded-md transition-colors"
+                  >
+                    <div className="mr-2 sm:mr-3 flex-shrink-0">
+                      {item.icon}
+                    </div>
+                    <span className="truncate">{item.name}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             );
           })}
-        </nav>
-      </div>
+        </SidebarMenu>
+      </SidebarContent>
       
-      <div className="p-3 sm:p-4 border-t">
+      <SidebarFooter className="border-t p-3 sm:p-4">
         <div className="flex items-center mb-3">
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
             {user?.profilePic ? (
@@ -221,7 +227,7 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
           </svg>
           Sign out
         </Button>
-      </div>
-    </div>
+      </SidebarFooter>
+    </Sidebar>
   );
 };
