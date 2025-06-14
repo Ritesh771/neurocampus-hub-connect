@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -56,113 +57,118 @@ const WeeklySchedulePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6 max-w-full overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
-              Weekly Schedule
-            </h1>
-            <p className="text-sm sm:text-base text-gray-600 mt-1">
-              Your complete weekly class schedule
-            </p>
+    <div className="w-full max-w-full overflow-hidden">
+      <div className="space-y-4 sm:space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
+                Weekly Schedule
+              </h1>
+              <p className="text-sm sm:text-base text-gray-600 mt-1">
+                Your complete weekly class schedule
+              </p>
+            </div>
+            <Badge variant="outline" className="flex items-center gap-2 w-fit flex-shrink-0">
+              <CalendarDays className="h-4 w-4" />
+              Current Week
+            </Badge>
           </div>
-          <Badge variant="outline" className="flex items-center gap-2 w-fit">
-            <CalendarDays className="h-4 w-4" />
-            Current Week
-          </Badge>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Week Navigation */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="flex gap-2 overflow-x-auto pb-2"
-      >
-        <Button 
-          variant={selectedWeek === 'current' ? 'default' : 'outline'} 
-          size="sm"
-          onClick={() => setSelectedWeek('current')}
+        {/* Week Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="flex gap-2 overflow-x-auto pb-2"
         >
-          Current Week
-        </Button>
-        <Button 
-          variant={selectedWeek === 'next' ? 'default' : 'outline'} 
-          size="sm"
-          onClick={() => setSelectedWeek('next')}
-        >
-          Next Week
-        </Button>
-      </motion.div>
-
-      {/* Weekly Grid */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4"
-      >
-        {days.map((day, dayIndex) => (
-          <motion.div
-            key={day}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: dayIndex * 0.05 }}
+          <Button 
+            variant={selectedWeek === 'current' ? 'default' : 'outline'} 
+            size="sm"
+            onClick={() => setSelectedWeek('current')}
+            className="flex-shrink-0"
           >
-            <Card className="h-full">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg">{day}</CardTitle>
-                <CardDescription>
-                  {weeklySchedule[day as keyof typeof weeklySchedule].length} classes
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {weeklySchedule[day as keyof typeof weeklySchedule].map((classItem, index) => (
-                    <div key={index} className="border rounded-lg p-3 hover:bg-gray-50 transition-colors">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Clock className="h-3 w-3 text-gray-500 flex-shrink-0" />
-                            <span className="text-xs font-medium text-gray-600">{classItem.time}</span>
-                          </div>
-                          <h4 className="font-medium text-sm truncate">{classItem.subject}</h4>
-                          <div className="space-y-1 mt-1">
-                            <div className="flex items-center gap-1">
-                              <User className="h-3 w-3 text-gray-400" />
-                              <span className="text-xs text-gray-600 truncate">{classItem.faculty}</span>
+            Current Week
+          </Button>
+          <Button 
+            variant={selectedWeek === 'next' ? 'default' : 'outline'} 
+            size="sm"
+            onClick={() => setSelectedWeek('next')}
+            className="flex-shrink-0"
+          >
+            Next Week
+          </Button>
+        </motion.div>
+
+        {/* Weekly Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+        >
+          {days.map((day, dayIndex) => (
+            <motion.div
+              key={day}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: dayIndex * 0.05 }}
+              className="w-full"
+            >
+              <Card className="h-full w-full">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">{day}</CardTitle>
+                  <CardDescription>
+                    {weeklySchedule[day as keyof typeof weeklySchedule].length} classes
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {weeklySchedule[day as keyof typeof weeklySchedule].map((classItem, index) => (
+                      <div key={index} className="border rounded-lg p-3 hover:bg-gray-50 transition-colors w-full">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Clock className="h-3 w-3 text-gray-500 flex-shrink-0" />
+                              <span className="text-xs font-medium text-gray-600">{classItem.time}</span>
                             </div>
-                            <div className="flex items-center gap-1">
-                              <MapPin className="h-3 w-3 text-gray-400" />
-                              <span className="text-xs text-gray-600">{classItem.room}</span>
+                            <h4 className="font-medium text-sm truncate">{classItem.subject}</h4>
+                            <div className="space-y-1 mt-1">
+                              <div className="flex items-center gap-1">
+                                <User className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                                <span className="text-xs text-gray-600 truncate">{classItem.faculty}</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <MapPin className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                                <span className="text-xs text-gray-600 truncate">{classItem.room}</span>
+                              </div>
                             </div>
                           </div>
+                          <Badge variant="outline" className={`${getTypeColor(classItem.type)} text-xs flex-shrink-0`}>
+                            {classItem.type}
+                          </Badge>
                         </div>
-                        <Badge variant="outline" className={`${getTypeColor(classItem.type)} text-xs flex-shrink-0`}>
-                          {classItem.type}
-                        </Badge>
                       </div>
-                    </div>
-                  ))}
-                  
-                  {weeklySchedule[day as keyof typeof weeklySchedule].length === 0 && (
-                    <div className="text-center py-4 text-gray-500">
-                      <Calendar className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                      <p className="text-sm">No classes scheduled</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </motion.div>
+                    ))}
+                    
+                    {weeklySchedule[day as keyof typeof weeklySchedule].length === 0 && (
+                      <div className="text-center py-4 text-gray-500">
+                        <Calendar className="h-8 w-8 mx-auto mb-2 text-gray-300" />
+                        <p className="text-sm">No classes scheduled</p>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };
