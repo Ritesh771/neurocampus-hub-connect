@@ -4,6 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
+import { Logo } from '@/components/ui/logo';
+import { Button } from '@/components/ui/button';
 import { 
   LayoutDashboard, Users, GraduationCap, BookOpen, Settings, 
   UserPlus, Upload, Building2, Bell, FileText, UserCheck,
@@ -12,8 +14,18 @@ import {
   FileCheck, UserCircle, Megaphone, MessageCircle, 
   CalendarCheck, PercentIcon, BookMarked,
   FileInput, CheckSquare, UserCog, ScanFace,
-  MapPin, Target, BookOpenCheck
+  MapPin, Target, BookOpenCheck, LogOut
 } from 'lucide-react';
+import { 
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  useSidebar
+} from "@/components/ui/sidebar";
 
 interface NavItem {
   label: string;
@@ -77,8 +89,9 @@ const navigationItems: NavItem[] = [
 ];
 
 export const SideNav: React.FC = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
+  const { setOpenMobile } = useSidebar();
 
   if (!user) return null;
 
@@ -86,32 +99,79 @@ export const SideNav: React.FC = () => {
     item.roles.includes(user.role)
   );
 
+  const handleLinkClick = () => {
+    // Close mobile sidebar when a link is clicked
+    setOpenMobile(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setOpenMobile(false);
+  };
+
   return (
-    <nav className="space-y-2 p-2">
-      {userNavItems.map((item, index) => {
-        const isActive = location.pathname === item.href;
-        const Icon = item.icon;
-        
-        return (
-          <motion.div
-            key={item.href}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.05 }}
+    <Sidebar>
+      <SidebarHeader className="p-4">
+        <div className="flex items-center gap-3">
+          <Logo size="sm" className="h-8 w-8" />
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">NeuroCampus</span>
+            <span className="text-xs text-muted-foreground">AMC College</span>
+          </div>
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className="px-2">
+        <SidebarMenu>
+          {userNavItems.map((item, index) => {
+            const isActive = location.pathname === item.href;
+            const Icon = item.icon;
+            
+            return (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                <SidebarMenuItem>
+                  <SidebarMenuButton 
+                    asChild
+                    isActive={isActive}
+                    onClick={handleLinkClick}
+                  >
+                    <Link to={item.href} className="flex items-center gap-3">
+                      <Icon className="h-4 w-4" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </motion.div>
+            );
+          })}
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-4">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 p-2 rounded-lg bg-muted/50">
+            <UserCircle className="h-6 w-6 text-muted-foreground" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">{user.name}</p>
+              <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleLogout}
+            className="w-full justify-start gap-2"
           >
-            <Link
-              to={item.href}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
-                isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground"
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              <span className="truncate">{item.label}</span>
-            </Link>
-          </motion.div>
-        );
-      })}
-    </nav>
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
   );
 };
