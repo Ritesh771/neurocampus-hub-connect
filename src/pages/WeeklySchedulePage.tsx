@@ -58,23 +58,23 @@ const WeeklySchedulePage: React.FC = () => {
 
   return (
     <div className="w-full max-w-full overflow-hidden">
-      <div className="space-y-4 sm:space-y-6">
+      <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-4">
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
+              <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold tracking-tight text-gray-900 truncate">
                 Weekly Schedule
               </h1>
-              <p className="text-sm sm:text-base text-gray-600 mt-1">
+              <p className="text-xs sm:text-sm lg:text-base text-gray-600 mt-1">
                 Your complete weekly class schedule
               </p>
             </div>
-            <Badge variant="outline" className="flex items-center gap-2 w-fit flex-shrink-0">
-              <CalendarDays className="h-4 w-4" />
+            <Badge variant="outline" className="flex items-center gap-2 w-fit flex-shrink-0 text-xs sm:text-sm">
+              <CalendarDays className="h-3 w-3 sm:h-4 sm:w-4" />
               Current Week
             </Badge>
           </div>
@@ -91,7 +91,7 @@ const WeeklySchedulePage: React.FC = () => {
             variant={selectedWeek === 'current' ? 'default' : 'outline'} 
             size="sm"
             onClick={() => setSelectedWeek('current')}
-            className="flex-shrink-0"
+            className="flex-shrink-0 text-xs sm:text-sm"
           >
             Current Week
           </Button>
@@ -99,7 +99,7 @@ const WeeklySchedulePage: React.FC = () => {
             variant={selectedWeek === 'next' ? 'default' : 'outline'} 
             size="sm"
             onClick={() => setSelectedWeek('next')}
-            className="flex-shrink-0"
+            className="flex-shrink-0 text-xs sm:text-sm"
           >
             Next Week
           </Button>
@@ -110,7 +110,7 @@ const WeeklySchedulePage: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4"
         >
           {days.map((day, dayIndex) => (
             <motion.div
@@ -122,8 +122,8 @@ const WeeklySchedulePage: React.FC = () => {
             >
               <Card className="h-full w-full">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">{day}</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-base sm:text-lg">{day}</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
                     {weeklySchedule[day as keyof typeof weeklySchedule].length} classes
                   </CardDescription>
                 </CardHeader>
@@ -135,9 +135,9 @@ const WeeklySchedulePage: React.FC = () => {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                               <Clock className="h-3 w-3 text-gray-500 flex-shrink-0" />
-                              <span className="text-xs font-medium text-gray-600">{classItem.time}</span>
+                              <span className="text-xs font-medium text-gray-600 truncate">{classItem.time}</span>
                             </div>
-                            <h4 className="font-medium text-sm truncate">{classItem.subject}</h4>
+                            <h4 className="font-medium text-xs sm:text-sm truncate">{classItem.subject}</h4>
                             <div className="space-y-1 mt-1">
                               <div className="flex items-center gap-1">
                                 <User className="h-3 w-3 text-gray-400 flex-shrink-0" />
@@ -158,8 +158,8 @@ const WeeklySchedulePage: React.FC = () => {
                     
                     {weeklySchedule[day as keyof typeof weeklySchedule].length === 0 && (
                       <div className="text-center py-4 text-gray-500">
-                        <Calendar className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-                        <p className="text-sm">No classes scheduled</p>
+                        <Calendar className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 text-gray-300" />
+                        <p className="text-xs sm:text-sm">No classes scheduled</p>
                       </div>
                     )}
                   </div>

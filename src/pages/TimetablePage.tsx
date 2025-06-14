@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar, Clock, Edit, Plus } from 'lucide-react';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TimetablePage: React.FC = () => {
   const { toast } = useToast();
@@ -39,174 +40,176 @@ const TimetablePage: React.FC = () => {
   const timeSlots = ['09:00-10:30', '10:45-12:15', '13:15-14:45', '14:00-15:30', '15:45-17:15'];
 
   return (
-    <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6 max-w-full overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
-              Timetable Management
-            </h1>
-            <p className="text-sm sm:text-base text-gray-600 mt-1">
-              Manage class schedules with clash detection
-            </p>
+    <div className="w-full max-w-full overflow-hidden">
+      <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex flex-col gap-4">
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold tracking-tight text-gray-900 truncate">
+                Timetable Management
+              </h1>
+              <p className="text-xs sm:text-sm lg:text-base text-gray-600 mt-1">
+                Manage class schedules with clash detection
+              </p>
+            </div>
+            <Button onClick={handleScheduleClass} className="flex items-center gap-2 w-fit text-xs sm:text-sm">
+              <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+              Schedule Class
+            </Button>
           </div>
-          <Button onClick={handleScheduleClass} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Schedule Class
-          </Button>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Filters */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Filters
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Select value={selectedSemester} onValueChange={setSelectedSemester}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Semester" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Semesters</SelectItem>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map(sem => (
-                    <SelectItem key={sem} value={sem.toString()}>Semester {sem}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
+                Filters
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <Select value={selectedSemester} onValueChange={setSelectedSemester}>
+                  <SelectTrigger className="text-sm">
+                    <SelectValue placeholder="Select Semester" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Semesters</SelectItem>
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map(sem => (
+                      <SelectItem key={sem} value={sem.toString()}>Semester {sem}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-              <Select value={selectedSection} onValueChange={setSelectedSection}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Section" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Sections</SelectItem>
-                  <SelectItem value="A">Section A</SelectItem>
-                  <SelectItem value="B">Section B</SelectItem>
-                  <SelectItem value="C">Section C</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Timetable Grid */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Weekly Timetable
-            </CardTitle>
-            <CardDescription>
-              View and manage class schedules across the week
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-2 sm:p-6">
-            <div className="overflow-x-auto">
-              <div className="min-w-[800px]">
-                <div className="grid grid-cols-6 gap-2 mb-4">
-                  <div className="font-semibold text-center p-2">Time</div>
-                  {days.map(day => (
-                    <div key={day} className="font-semibold text-center p-2 bg-gray-50 rounded">
-                      {day}
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {timeSlots.map(timeSlot => (
-                    <div key={timeSlot} className="grid grid-cols-6 gap-2">
-                      <div className="font-medium text-sm p-2 bg-gray-100 rounded text-center">
-                        {timeSlot}
-                      </div>
-                      {days.map(day => {
-                        const classForSlot = filteredTimetable.find(
-                          entry => entry.day === day && entry.time === timeSlot
-                        );
-                        return (
-                          <div key={`${day}-${timeSlot}`} className="min-h-[80px] border rounded p-2">
-                            {classForSlot ? (
-                              <div className="space-y-1">
-                                <div className="font-medium text-xs text-blue-600">
-                                  {classForSlot.subject}
-                                </div>
-                                <div className="text-xs text-gray-600">
-                                  {classForSlot.faculty}
-                                </div>
-                                <div className="text-xs text-gray-500">
-                                  {classForSlot.room}
-                                </div>
-                                <Badge variant="outline" className="text-xs">
-                                  Sem {classForSlot.semester}-{classForSlot.section}
-                                </Badge>
-                              </div>
-                            ) : (
-                              <div className="h-full flex items-center justify-center">
-                                <Button variant="ghost" size="sm" className="text-xs h-6">
-                                  <Plus className="h-3 w-3" />
-                                </Button>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
+                <Select value={selectedSection} onValueChange={setSelectedSection}>
+                  <SelectTrigger className="text-sm">
+                    <SelectValue placeholder="Select Section" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Sections</SelectItem>
+                    <SelectItem value="A">Section A</SelectItem>
+                    <SelectItem value="B">Section B</SelectItem>
+                    <SelectItem value="C">Section C</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-      {/* Recent Changes */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Recent Schedule Changes</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {filteredTimetable.slice(0, 3).map((entry, index) => (
-                <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                  <div className="flex-1">
-                    <div className="font-medium text-sm">{entry.subject}</div>
-                    <div className="text-xs text-gray-600">
-                      {entry.day}, {entry.time} • {entry.faculty} • {entry.room}
-                    </div>
+        {/* Timetable Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+                Weekly Timetable
+              </CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                View and manage class schedules across the week
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-2 sm:p-6">
+              <ScrollArea className="w-full">
+                <div className="min-w-[800px]">
+                  <div className="grid grid-cols-6 gap-2 mb-4">
+                    <div className="font-semibold text-center p-2 text-xs sm:text-sm">Time</div>
+                    {days.map(day => (
+                      <div key={day} className="font-semibold text-center p-2 bg-gray-50 rounded text-xs sm:text-sm">
+                        {day}
+                      </div>
+                    ))}
                   </div>
-                  <Button variant="ghost" size="sm">
-                    <Edit className="h-4 w-4" />
-                  </Button>
+                  
+                  <div className="space-y-2 max-h-96 overflow-y-auto">
+                    {timeSlots.map(timeSlot => (
+                      <div key={timeSlot} className="grid grid-cols-6 gap-2">
+                        <div className="font-medium text-xs sm:text-sm p-2 bg-gray-100 rounded text-center">
+                          {timeSlot}
+                        </div>
+                        {days.map(day => {
+                          const classForSlot = filteredTimetable.find(
+                            entry => entry.day === day && entry.time === timeSlot
+                          );
+                          return (
+                            <div key={`${day}-${timeSlot}`} className="min-h-[80px] border rounded p-2">
+                              {classForSlot ? (
+                                <div className="space-y-1">
+                                  <div className="font-medium text-xs text-blue-600 truncate">
+                                    {classForSlot.subject}
+                                  </div>
+                                  <div className="text-xs text-gray-600 truncate">
+                                    {classForSlot.faculty}
+                                  </div>
+                                  <div className="text-xs text-gray-500 truncate">
+                                    {classForSlot.room}
+                                  </div>
+                                  <Badge variant="outline" className="text-xs">
+                                    Sem {classForSlot.semester}-{classForSlot.section}
+                                  </Badge>
+                                </div>
+                              ) : (
+                                <div className="h-full flex items-center justify-center">
+                                  <Button variant="ghost" size="sm" className="text-xs h-6">
+                                    <Plus className="h-3 w-3" />
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Recent Changes */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base sm:text-lg">Recent Schedule Changes</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {filteredTimetable.slice(0, 3).map((entry, index) => (
+                  <div key={entry.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-sm truncate">{entry.subject}</div>
+                      <div className="text-xs text-gray-600 truncate">
+                        {entry.day}, {entry.time} • {entry.faculty} • {entry.room}
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
     </div>
   );
 };
