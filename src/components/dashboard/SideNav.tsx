@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
@@ -160,19 +161,19 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
   };
 
   return (
-    <Sidebar className={className}>
-      <SidebarHeader className="border-b">
-        <div className="flex items-center p-3 sm:p-4">
+    <Sidebar className={cn("bg-white border-r border-gray-200", className)} style={{ backgroundColor: 'white' }}>
+      <SidebarHeader className="border-b border-gray-200 bg-white">
+        <div className="flex items-center p-3 sm:p-4 bg-white">
           <Logo size="sm" className="h-8 sm:h-10" />
           <div className="ml-3">
-            <h2 className="text-base sm:text-lg font-semibold">NeuroCampus</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900">NeuroCampus</h2>
             <p className="text-xs text-gray-500">{user?.role.charAt(0).toUpperCase() + user?.role.slice(1)} Portal</p>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="flex-1 overflow-y-auto">
-        <SidebarMenu className="space-y-1 p-3 sm:p-4">
+      <SidebarContent className="flex-1 overflow-y-auto bg-white">
+        <SidebarMenu className="space-y-1 p-3 sm:p-4 bg-white">
           {filteredNavigation.map((item) => {
             const isActive = location.pathname === item.href || location.pathname.startsWith(`${item.href}/`);
             
@@ -182,9 +183,17 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
                   <Link
                     to={item.href}
                     onClick={handleNavClick}
-                    className="flex items-center px-2 sm:px-3 py-2 text-sm rounded-md transition-colors"
+                    className={cn(
+                      "flex items-center px-2 sm:px-3 py-2 text-sm rounded-md transition-colors",
+                      isActive
+                        ? "bg-primary/10 text-primary font-medium"
+                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                    )}
                   >
-                    <div className="mr-2 sm:mr-3 flex-shrink-0">
+                    <div className={cn(
+                      "mr-2 sm:mr-3 flex-shrink-0",
+                      isActive ? "text-primary" : "text-gray-500"
+                    )}>
                       {item.icon}
                     </div>
                     <span className="truncate">{item.name}</span>
@@ -196,7 +205,7 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
         </SidebarMenu>
       </SidebarContent>
       
-      <SidebarFooter className="border-t p-3 sm:p-4">
+      <SidebarFooter className="border-t border-gray-200 p-3 sm:p-4 bg-white">
         <div className="flex items-center mb-3">
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
             {user?.profilePic ? (
@@ -212,14 +221,14 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
             )}
           </div>
           <div className="ml-2 sm:ml-3 truncate flex-1 min-w-0">
-            <p className="text-xs sm:text-sm font-medium truncate">{user?.name}</p>
+            <p className="text-xs sm:text-sm font-medium truncate text-gray-900">{user?.name}</p>
             <p className="text-xs text-gray-500 truncate">{user?.email}</p>
           </div>
         </div>
         
         <Button 
           variant="outline" 
-          className="w-full flex items-center justify-center text-sm h-8 sm:h-9" 
+          className="w-full flex items-center justify-center text-sm h-8 sm:h-9 bg-white border-gray-300 text-gray-700 hover:bg-gray-50" 
           onClick={logout}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
