@@ -1,14 +1,30 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Logo } from '@/components/ui/logo';
 import { useAuth } from '@/context/AuthContext';
 
 export const AppHeader: React.FC = () => {
   const { user } = useAuth();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('en-US', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  };
 
   return (
     <header className="bg-white border-b shadow-sm">
@@ -27,30 +43,16 @@ export const AppHeader: React.FC = () => {
           </div>
         </div>
 
-        {/* Search & Actions */}
+        {/* Live Clock & Actions */}
         <div className="ml-auto flex items-center gap-2 sm:gap-4">
-          {/* Search toggle for mobile */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden h-8 w-8"
-            onClick={() => setIsSearchOpen(!isSearchOpen)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          {/* Live Clock */}
+          <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-md border">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-          </Button>
-
-          {/* Search for larger screens */}
-          <div className="hidden md:flex items-center gap-2 relative">
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-[180px] lg:w-[280px] pl-8 text-sm"
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400 absolute left-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <span className="text-sm font-mono font-medium text-gray-700 min-w-[72px]">
+              {formatTime(currentTime)}
+            </span>
           </div>
 
           {/* Notifications */}
@@ -67,13 +69,6 @@ export const AppHeader: React.FC = () => {
           </span>
         </div>
       </div>
-      
-      {/* Mobile search expanded */}
-      {isSearchOpen && (
-        <div className="px-3 sm:px-4 pb-3 md:hidden border-t bg-gray-50">
-          <Input type="search" placeholder="Search..." className="w-full mt-3 text-sm" />
-        </div>
-      )}
     </header>
   );
 };
