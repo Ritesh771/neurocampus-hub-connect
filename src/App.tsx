@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -48,80 +49,93 @@ import LeaveStatusPage from "./pages/LeaveStatusPage";
 import CertificatesPage from "./pages/CertificatesPage";
 import FaceRecognitionPage from "./pages/FaceRecognitionPage";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<Index />} />
-            
-            {/* Dashboard routes - protected by DashboardLayout */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route index element={<Dashboard />} />
+console.log('App component loading...');
+
+const App = () => {
+  console.log('App component rendering...');
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<Index />} />
               
-              {/* Admin routes */}
-              <Route path="users" element={<UsersPage />} />
-              <Route path="enroll-user" element={<EnrollUserPage />} />
-              <Route path="bulk-upload" element={<BulkUploadPage />} />
-              <Route path="branches" element={<BranchesPage />} />
-              <Route path="notifications" element={<NotificationsPage />} />
-              <Route path="hod-leaves" element={<HODLeavesPage />} />
+              {/* Dashboard routes - protected by DashboardLayout */}
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<Dashboard />} />
+                
+                {/* Admin routes */}
+                <Route path="users" element={<UsersPage />} />
+                <Route path="enroll-user" element={<EnrollUserPage />} />
+                <Route path="bulk-upload" element={<BulkUploadPage />} />
+                <Route path="branches" element={<BranchesPage />} />
+                <Route path="notifications" element={<NotificationsPage />} />
+                <Route path="hod-leaves" element={<HODLeavesPage />} />
+                
+                {/* HOD routes */}
+                <Route path="low-attendance" element={<LowAttendancePage />} />
+                <Route path="academic-structure" element={<AcademicStructurePage />} />
+                <Route path="faculty-assignments" element={<FacultyAssignmentsPage />} />
+                <Route path="timetable" element={<TimetablePage />} />
+                <Route path="notices" element={<NoticesPage />} />
+                <Route path="proctors" element={<ProctorsPage />} />
+                <Route path="performance" element={<PerformancePage />} />
+                
+                {/* Faculty routes */}
+                <Route path="take-attendance" element={<TakeAttendancePage />} />
+                <Route path="upload-marks" element={<UploadMarksPage />} />
+                <Route path="apply-leave" element={<ApplyLeavePage />} />
+                <Route path="attendance-records" element={<AttendanceRecordsPage />} />
+                <Route path="announcements" element={<AnnouncementsPage />} />
+                <Route path="proctor-students" element={<ProctorStudentsPage />} />
+                <Route path="manage-student-leave" element={<ManageStudentLeavePage />} />
+                <Route path="schedule-mentoring" element={<ScheduleMentoringPage />} />
+                <Route path="generate-statistics" element={<GenerateStatisticsPage />} />
+                
+                {/* Student routes */}
+                <Route path="weekly-schedule" element={<WeeklySchedulePage />} />
+                <Route path="internal-marks" element={<InternalMarksPage />} />
+                <Route path="leave-request" element={<LeaveRequestPage />} />
+                <Route path="leave-status" element={<LeaveStatusPage />} />
+                <Route path="certificates" element={<CertificatesPage />} />
+                <Route path="face-recognition" element={<FaceRecognitionPage />} />
+                
+                {/* Common routes */}
+                <Route path="departments" element={<DepartmentsPage />} />
+                <Route path="faculty" element={<FacultyPage />} />
+                <Route path="students" element={<StudentsPage />} />
+                <Route path="courses" element={<CoursesPage />} />
+                <Route path="attendance" element={<AttendancePage />} />
+                <Route path="grades" element={<GradesPage />} />
+                <Route path="materials" element={<MaterialsPage />} />
+                <Route path="chat" element={<ChatPage />} />
+                <Route path="rank" element={<RankPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
               
-              {/* HOD routes */}
-              <Route path="low-attendance" element={<LowAttendancePage />} />
-              <Route path="academic-structure" element={<AcademicStructurePage />} />
-              <Route path="faculty-assignments" element={<FacultyAssignmentsPage />} />
-              <Route path="timetable" element={<TimetablePage />} />
-              <Route path="notices" element={<NoticesPage />} />
-              <Route path="proctors" element={<ProctorsPage />} />
-              <Route path="performance" element={<PerformancePage />} />
-              
-              {/* Faculty routes */}
-              <Route path="take-attendance" element={<TakeAttendancePage />} />
-              <Route path="upload-marks" element={<UploadMarksPage />} />
-              <Route path="apply-leave" element={<ApplyLeavePage />} />
-              <Route path="attendance-records" element={<AttendanceRecordsPage />} />
-              <Route path="announcements" element={<AnnouncementsPage />} />
-              <Route path="proctor-students" element={<ProctorStudentsPage />} />
-              <Route path="manage-student-leave" element={<ManageStudentLeavePage />} />
-              <Route path="schedule-mentoring" element={<ScheduleMentoringPage />} />
-              <Route path="generate-statistics" element={<GenerateStatisticsPage />} />
-              
-              {/* Student routes */}
-              <Route path="weekly-schedule" element={<WeeklySchedulePage />} />
-              <Route path="internal-marks" element={<InternalMarksPage />} />
-              <Route path="leave-request" element={<LeaveRequestPage />} />
-              <Route path="leave-status" element={<LeaveStatusPage />} />
-              <Route path="certificates" element={<CertificatesPage />} />
-              <Route path="face-recognition" element={<FaceRecognitionPage />} />
-              
-              {/* Common routes */}
-              <Route path="departments" element={<DepartmentsPage />} />
-              <Route path="faculty" element={<FacultyPage />} />
-              <Route path="students" element={<StudentsPage />} />
-              <Route path="courses" element={<CoursesPage />} />
-              <Route path="attendance" element={<AttendancePage />} />
-              <Route path="grades" element={<GradesPage />} />
-              <Route path="materials" element={<MaterialsPage />} />
-              <Route path="chat" element={<ChatPage />} />
-              <Route path="rank" element={<RankPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="settings" element={<SettingsPage />} />
-            </Route>
-            
-            {/* Catch all 404 route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+              {/* Catch all 404 route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
