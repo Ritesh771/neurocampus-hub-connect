@@ -5,7 +5,7 @@ import { AppHeader } from './AppHeader';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Logo } from '@/components/ui/logo';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarInset, Sidebar, SidebarContent } from '@/components/ui/sidebar';
 
 export const DashboardLayout: React.FC = () => {
   const { user, loading } = useAuth();
@@ -31,7 +31,11 @@ export const DashboardLayout: React.FC = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
-        <SideNav />
+        <Sidebar className="border-r">
+          <SidebarContent>
+            <SideNav />
+          </SidebarContent>
+        </Sidebar>
         <SidebarInset>
           <AppHeader />
           <main className="flex-1 overflow-y-auto h-[calc(100vh-4rem)]">
