@@ -164,7 +164,7 @@ const LowAttendancePage: React.FC = () => {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Critical (<50%)</p>
+                <p className="text-sm text-gray-600">Critical (&lt;50%)</p>
                 <p className="text-2xl font-bold text-red-600">
                   {filteredStudents.filter(s => s.attendance < 50).length}
                 </p>
