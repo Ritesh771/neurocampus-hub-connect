@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Clock, MapPin, User } from 'lucide-react';
+import { CalendarDays, Clock, MapPin, User, Calendar } from 'lucide-react';
 
 const WeeklySchedulePage: React.FC = () => {
   const [selectedWeek, setSelectedWeek] = useState('current');
