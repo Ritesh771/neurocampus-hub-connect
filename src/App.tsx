@@ -22,6 +22,10 @@ import StudentsPage from "./pages/StudentsPage";
 import CoursesPage from "./pages/CoursesPage";
 import EnrollUserPage from "./pages/EnrollUserPage";
 import BulkUploadPage from "./pages/BulkUploadPage";
+import BranchesPage from "./pages/BranchesPage";
+import NotificationsPage from "./pages/NotificationsPage";
+import HODLeavesPage from "./pages/HODLeavesPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +46,9 @@ const App = () => (
               <Route path="users" element={<UsersPage />} />
               <Route path="enroll-user" element={<EnrollUserPage />} />
               <Route path="bulk-upload" element={<BulkUploadPage />} />
+              <Route path="branches" element={<BranchesPage />} />
+              <Route path="notifications" element={<NotificationsPage />} />
+              <Route path="hod-leaves" element={<HODLeavesPage />} />
               <Route path="departments" element={<DepartmentsPage />} />
               <Route path="faculty" element={<FacultyPage />} />
               <Route path="students" element={<StudentsPage />} />
@@ -51,6 +58,7 @@ const App = () => (
               <Route path="materials" element={<MaterialsPage />} />
               <Route path="chat" element={<ChatPage />} />
               <Route path="rank" element={<RankPage />} />
+              <Route path="profile" element={<ProfilePage />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
             
