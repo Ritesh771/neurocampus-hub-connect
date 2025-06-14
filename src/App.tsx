@@ -29,6 +29,10 @@ import ProfilePage from "./pages/ProfilePage";
 import LowAttendancePage from "./pages/LowAttendancePage";
 import AcademicStructurePage from "./pages/AcademicStructurePage";
 import FacultyAssignmentsPage from "./pages/FacultyAssignmentsPage";
+import TimetablePage from "./pages/TimetablePage";
+import NoticesPage from "./pages/NoticesPage";
+import ProctorsPage from "./pages/ProctorsPage";
+import PerformancePage from "./pages/PerformancePage";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +63,10 @@ const App = () => (
               <Route path="low-attendance" element={<LowAttendancePage />} />
               <Route path="academic-structure" element={<AcademicStructurePage />} />
               <Route path="faculty-assignments" element={<FacultyAssignmentsPage />} />
+              <Route path="timetable" element={<TimetablePage />} />
+              <Route path="notices" element={<NoticesPage />} />
+              <Route path="proctors" element={<ProctorsPage />} />
+              <Route path="performance" element={<PerformancePage />} />
               
               {/* Common routes */}
               <Route path="departments" element={<DepartmentsPage />} />
