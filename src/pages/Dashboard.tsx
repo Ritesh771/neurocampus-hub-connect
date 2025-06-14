@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Logo } from '@/components/ui/logo';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { motion } from 'framer-motion';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -17,7 +18,12 @@ const Dashboard: React.FC = () => {
   // If user doesn't have a valid role, show a fallback view
   if (!user || !['admin', 'hod', 'faculty', 'student'].includes(user.role)) {
     return (
-      <div className="space-y-4 sm:space-y-6">
+      <motion.div 
+        className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <Logo size="md" className="h-10 sm:h-12" />
           <div>
@@ -47,31 +53,51 @@ const Dashboard: React.FC = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     );
   }
 
   // Show welcome banner for mobile users
   const WelcomeBanner = () => (
-    <Card className="mb-4 sm:mb-6 bg-primary/5 border border-primary/20 md:hidden">
-      <CardContent className="pt-4 sm:pt-6">
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card className="mb-4 sm:mb-6 bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 md:hidden">
+        <CardContent className="pt-4 sm:pt-6">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <motion.div 
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
+              animate={{ 
+                boxShadow: [
+                  "0 0 0 0 rgba(var(--primary), 0.7)",
+                  "0 0 0 10px rgba(var(--primary), 0)",
+                  "0 0 0 0 rgba(var(--primary), 0)"
+                ]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop"
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </motion.div>
+            <div className="min-w-0">
+              <h2 className="font-semibold text-base sm:text-lg truncate">Welcome, {user.name}!</h2>
+              <p className="text-xs sm:text-sm text-gray-500">
+                {user.role === 'admin' ? 'Administrator Dashboard' :
+                 user.role === 'hod' ? 'Department Head Dashboard' :
+                 user.role === 'faculty' ? 'Faculty Dashboard' : 'Student Dashboard'}
+              </p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <h2 className="font-semibold text-base sm:text-lg truncate">Welcome, {user.name}!</h2>
-            <p className="text-xs sm:text-sm text-gray-500">
-              {user.role === 'admin' ? 'Administrator Dashboard' :
-               user.role === 'hod' ? 'Department Head Dashboard' :
-               user.role === 'faculty' ? 'Faculty Dashboard' : 'Student Dashboard'}
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 
   // Render different dashboard based on user role

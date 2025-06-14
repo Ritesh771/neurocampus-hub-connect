@@ -20,6 +20,8 @@ import DepartmentsPage from "./pages/DepartmentsPage";
 import FacultyPage from "./pages/FacultyPage";
 import StudentsPage from "./pages/StudentsPage";
 import CoursesPage from "./pages/CoursesPage";
+import EnrollUserPage from "./pages/EnrollUserPage";
+import BulkUploadPage from "./pages/BulkUploadPage";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,8 @@ const App = () => (
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="users" element={<UsersPage />} />
+              <Route path="enroll-user" element={<EnrollUserPage />} />
+              <Route path="bulk-upload" element={<BulkUploadPage />} />
               <Route path="departments" element={<DepartmentsPage />} />
               <Route path="faculty" element={<FacultyPage />} />
               <Route path="students" element={<StudentsPage />} />
