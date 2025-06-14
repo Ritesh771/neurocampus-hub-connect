@@ -12,10 +12,8 @@ import {
   FileCheck, UserCircle, Megaphone, MessageCircle, 
   CalendarCheck, PercentIcon, BookMarked,
   FileInput, CheckSquare, UserCog, ScanFace,
-  MapPin, Target, BookOpenCheck, LogOut
+  MapPin, Target, BookOpenCheck
 } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 
 interface NavItem {
   label: string;
@@ -62,7 +60,7 @@ const navigationItems: NavItem[] = [
   { label: 'Generate Statistics', href: '/dashboard/generate-statistics', icon: TrendingUp, roles: ['faculty'] },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings, roles: ['faculty'] },
 
-  // Student Routes - Exactly 13 items as specified
+  // Student Routes
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['student'] },
   { label: 'Timetable', href: '/dashboard/timetable', icon: Calendar, roles: ['student'] },
   { label: 'Weekly Schedule', href: '/dashboard/weekly-schedule', icon: CalendarDays, roles: ['student'] },
@@ -79,7 +77,7 @@ const navigationItems: NavItem[] = [
 ];
 
 export const SideNav: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
 
   if (!user) return null;
@@ -88,51 +86,32 @@ export const SideNav: React.FC = () => {
     item.roles.includes(user.role)
   );
 
-  const handleSignOut = () => {
-    logout();
-  };
-
   return (
-    <div className="flex flex-col h-full">
-      {/* Navigation Items */}
-      <nav className="flex-1 space-y-2 p-2">
-        {userNavItems.map((item, index) => {
-          const isActive = location.pathname === item.href;
-          const Icon = item.icon;
-          
-          return (
-            <motion.div
-              key={item.href}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
+    <nav className="space-y-2 p-2">
+      {userNavItems.map((item, index) => {
+        const isActive = location.pathname === item.href;
+        const Icon = item.icon;
+        
+        return (
+          <motion.div
+            key={item.href}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+          >
+            <Link
+              to={item.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
+                isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground"
+              )}
             >
-              <Link
-                to={item.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all hover:bg-accent hover:text-accent-foreground",
-                  isActive ? "bg-accent text-accent-foreground" : "text-muted-foreground"
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                <span className="truncate">{item.label}</span>
-              </Link>
-            </motion.div>
-          );
-        })}
-      </nav>
-
-      {/* Sign Out Button */}
-      <div className="p-2 border-t">
-        <Button
-          variant="ghost"
-          className="w-full justify-start text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-          onClick={handleSignOut}
-        >
-          <LogOut className="h-4 w-4 mr-3" />
-          Sign Out
-        </Button>
-      </div>
-    </div>
+              <Icon className="h-4 w-4" />
+              <span className="truncate">{item.label}</span>
+            </Link>
+          </motion.div>
+        );
+      })}
+    </nav>
   );
 };

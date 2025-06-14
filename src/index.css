@@ -75,7 +75,6 @@
   body {
     @apply bg-background text-foreground;
     font-size: 14px;
-    line-height: 1.5;
   }
 
   @media (min-width: 640px) {
@@ -89,60 +88,33 @@
   }
   
   .edu-card {
-    @apply bg-white rounded-lg p-3 sm:p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow duration-300;
+    @apply bg-white rounded-lg p-3 sm:p-4 shadow-md hover:shadow-lg transition-shadow duration-300;
   }
   
   .stat-card {
-    @apply border border-gray-200 rounded-lg p-3 sm:p-4 md:p-6 hover:border-primary/50 transition-colors;
+    @apply border border-gray-200 rounded-lg p-3 sm:p-4 hover:border-primary/50 transition-colors;
   }
 
   /* Mobile-first responsive utilities */
   .mobile-container {
-    @apply px-3 sm:px-4 md:px-6 lg:px-8;
+    @apply px-4 sm:px-6 lg:px-8;
   }
 
   .mobile-text {
-    @apply text-xs sm:text-sm md:text-base;
+    @apply text-sm sm:text-base;
   }
 
   .mobile-heading {
-    @apply text-sm sm:text-base md:text-lg lg:text-xl;
-  }
-
-  .mobile-title {
-    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+    @apply text-lg sm:text-xl lg:text-2xl;
   }
 
   .mobile-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6;
-  }
-
-  .mobile-grid-2 {
-    @apply grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6;
-  }
-
-  .mobile-flex {
-    @apply flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6;
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6;
   }
 
   /* Logo specific styles */
   .logo-container img {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  }
-
-  /* Button responsive styles */
-  .btn-mobile {
-    @apply px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm md:text-base;
-  }
-
-  /* Card responsive styles */
-  .card-mobile {
-    @apply p-3 sm:p-4 md:p-6;
-  }
-
-  /* Sidebar responsive styles */
-  .sidebar-mobile {
-    @apply w-full sm:w-64 md:w-72 lg:w-80;
   }
 }
 
@@ -157,49 +129,14 @@
 
   /* Mobile-first spacing utilities */
   .space-mobile {
-    @apply space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6;
+    @apply space-y-3 sm:space-y-4 lg:space-y-6;
   }
 
   .padding-mobile {
-    @apply p-2 sm:p-3 md:p-4 lg:p-6;
+    @apply p-3 sm:p-4 lg:p-6;
   }
 
   .margin-mobile {
-    @apply m-2 sm:m-3 md:m-4 lg:m-6;
-  }
-
-  /* Mobile touch targets */
-  .touch-target {
-    @apply min-h-[44px] min-w-[44px];
-  }
-
-  /* Mobile scroll areas */
-  .scroll-mobile {
-    @apply overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100;
-  }
-
-  /* Mobile text truncation */
-  .truncate-mobile {
-    @apply truncate sm:text-clip;
-  }
-}
-
-/* Custom scrollbar for mobile */
-@layer utilities {
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
-  
-  .scrollbar-thumb-gray-300::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219);
-  }
-  
-  .scrollbar-track-gray-100::-webkit-scrollbar-track {
-    background-color: rgb(243 244 246);
-  }
-  
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    @apply m-3 sm:m-4 lg:m-6;
   }
 }
