@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -42,6 +41,12 @@ import ProctorStudentsPage from "./pages/ProctorStudentsPage";
 import ManageStudentLeavePage from "./pages/ManageStudentLeavePage";
 import ScheduleMentoringPage from "./pages/ScheduleMentoringPage";
 import GenerateStatisticsPage from "./pages/GenerateStatisticsPage";
+import WeeklySchedulePage from "./pages/WeeklySchedulePage";
+import InternalMarksPage from "./pages/InternalMarksPage";
+import LeaveRequestPage from "./pages/LeaveRequestPage";
+import LeaveStatusPage from "./pages/LeaveStatusPage";
+import CertificatesPage from "./pages/CertificatesPage";
+import FaceRecognitionPage from "./pages/FaceRecognitionPage";
 
 const queryClient = new QueryClient();
 
@@ -87,6 +92,14 @@ const App = () => (
               <Route path="manage-student-leave" element={<ManageStudentLeavePage />} />
               <Route path="schedule-mentoring" element={<ScheduleMentoringPage />} />
               <Route path="generate-statistics" element={<GenerateStatisticsPage />} />
+              
+              {/* Student routes */}
+              <Route path="weekly-schedule" element={<WeeklySchedulePage />} />
+              <Route path="internal-marks" element={<InternalMarksPage />} />
+              <Route path="leave-request" element={<LeaveRequestPage />} />
+              <Route path="leave-status" element={<LeaveStatusPage />} />
+              <Route path="certificates" element={<CertificatesPage />} />
+              <Route path="face-recognition" element={<FaceRecognitionPage />} />
               
               {/* Common routes */}
               <Route path="departments" element={<DepartmentsPage />} />
