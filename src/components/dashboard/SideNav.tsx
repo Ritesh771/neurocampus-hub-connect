@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Logo } from '@/components/ui/logo';
 import { useAuth } from '@/context/AuthContext';
 
 interface NavItem {
@@ -145,13 +145,11 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
 
   return (
     <div className={cn("flex flex-col h-full bg-white border-r", className)}>
-      <div className="flex flex-col flex-grow p-4 overflow-y-auto">
-        <div className="flex items-center pb-4 mb-4 border-b">
-          <div className="w-10 h-10 rounded-full neurocampus-gradient flex items-center justify-center">
-            <span className="text-lg font-bold text-white">NC</span>
-          </div>
+      <div className="flex flex-col flex-grow p-3 sm:p-4 overflow-y-auto">
+        <div className="flex items-center pb-3 sm:pb-4 mb-3 sm:mb-4 border-b">
+          <Logo size="sm" className="h-8 sm:h-10" />
           <div className="ml-3">
-            <h2 className="text-lg font-semibold">NeuroCampus</h2>
+            <h2 className="text-base sm:text-lg font-semibold">NeuroCampus</h2>
             <p className="text-xs text-gray-500">{user?.role.charAt(0).toUpperCase() + user?.role.slice(1)} Portal</p>
           </div>
         </div>
@@ -168,49 +166,49 @@ export const SideNav: React.FC<{ className?: string }> = ({ className }) => {
                   isActive
                     ? "bg-secondary text-primary font-medium"
                     : "text-gray-600 hover:bg-gray-50",
-                  "group flex items-center px-3 py-2 text-sm rounded-md transition-colors"
+                  "group flex items-center px-2 sm:px-3 py-2 text-sm rounded-md transition-colors"
                 )}
               >
                 <div className={cn(
                   isActive ? "text-primary" : "text-gray-500 group-hover:text-gray-700",
-                  "mr-3 flex-shrink-0"
+                  "mr-2 sm:mr-3 flex-shrink-0"
                 )}>
                   {item.icon}
                 </div>
-                {item.name}
+                <span className="truncate">{item.name}</span>
               </Link>
             );
           })}
         </nav>
       </div>
       
-      <div className="p-4 border-t">
+      <div className="p-3 sm:p-4 border-t">
         <div className="flex items-center mb-3">
-          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
             {user?.profilePic ? (
               <img 
                 src={user.profilePic} 
                 alt={user?.name} 
-                className="w-8 h-8 rounded-full" 
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover" 
               />
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
               </svg>
             )}
           </div>
-          <div className="ml-3 truncate">
-            <p className="text-sm font-medium">{user?.name}</p>
+          <div className="ml-2 sm:ml-3 truncate flex-1 min-w-0">
+            <p className="text-xs sm:text-sm font-medium truncate">{user?.name}</p>
             <p className="text-xs text-gray-500 truncate">{user?.email}</p>
           </div>
         </div>
         
         <Button 
           variant="outline" 
-          className="w-full flex items-center justify-center" 
+          className="w-full flex items-center justify-center text-sm h-8 sm:h-9" 
           onClick={logout}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
           </svg>
           Sign out

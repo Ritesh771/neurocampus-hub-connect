@@ -74,6 +74,13 @@
 
   body {
     @apply bg-background text-foreground;
+    font-size: 14px;
+  }
+
+  @media (min-width: 640px) {
+    body {
+      font-size: 16px;
+    }
   }
 
   .neurocampus-gradient {
@@ -81,10 +88,55 @@
   }
   
   .edu-card {
-    @apply bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-300;
+    @apply bg-white rounded-lg p-3 sm:p-4 shadow-md hover:shadow-lg transition-shadow duration-300;
   }
   
   .stat-card {
-    @apply border border-gray-200 rounded-lg p-4 hover:border-primary/50 transition-colors;
+    @apply border border-gray-200 rounded-lg p-3 sm:p-4 hover:border-primary/50 transition-colors;
+  }
+
+  /* Mobile-first responsive utilities */
+  .mobile-container {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .mobile-text {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-heading {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  /* Logo specific styles */
+  .logo-container img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+  
+  .animate-pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  /* Mobile-first spacing utilities */
+  .space-mobile {
+    @apply space-y-3 sm:space-y-4 lg:space-y-6;
+  }
+
+  .padding-mobile {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+
+  .margin-mobile {
+    @apply m-3 sm:m-4 lg:m-6;
   }
 }
