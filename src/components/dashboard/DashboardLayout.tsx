@@ -13,11 +13,11 @@ export const DashboardLayout: React.FC = () => {
   if (loading) {
     return (
       <div className="flex h-screen w-full items-center justify-center px-4">
-        <div className="flex flex-col items-center space-y-4 text-center">
-          <Logo size="lg" className="h-16 sm:h-20" />
-          <div className="space-y-2">
-            <h2 className="text-lg sm:text-xl font-semibold">AMC College</h2>
-            <p className="text-sm sm:text-base font-medium text-gray-600">Loading NeuroCampus...</p>
+        <div className="flex flex-col items-center space-y-3 sm:space-y-4 text-center">
+          <Logo size="lg" className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20" />
+          <div className="space-y-1 sm:space-y-2">
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold">AMC College</h2>
+            <p className="text-xs sm:text-sm md:text-base font-medium text-gray-600">Loading NeuroCampus...</p>
           </div>
         </div>
       </div>
@@ -31,15 +31,15 @@ export const DashboardLayout: React.FC = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
-        <Sidebar className="border-r">
+        <Sidebar className="border-r hidden lg:flex">
           <SidebarContent>
             <SideNav />
           </SidebarContent>
         </Sidebar>
-        <SidebarInset>
+        <SidebarInset className="flex-1">
           <AppHeader />
-          <main className="flex-1 overflow-y-auto h-[calc(100vh-4rem)]">
-            <div className="p-3 sm:p-4 md:p-6 lg:p-8 max-w-full">
+          <main className="flex-1 overflow-y-auto h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)]">
+            <div className="p-3 sm:p-4 md:p-6 max-w-full">
               <Outlet />
             </div>
           </main>
