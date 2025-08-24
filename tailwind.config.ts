@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -27,7 +26,9 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					glow: 'hsl(var(--primary-glow))',
+					variant: 'hsl(var(--primary-variant))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -37,13 +38,22 @@ export default {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					foreground: 'hsl(var(--accent-foreground))',
+					muted: 'hsl(var(--accent-muted))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -63,6 +73,17 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-accent': 'var(--gradient-accent)',
+				'gradient-surface': 'var(--gradient-surface)',
+				'gradient-glass': 'var(--gradient-glass)'
+			},
+			boxShadow: {
+				'glow': 'var(--shadow-glow)',
+				'accent-glow': 'var(--shadow-accent-glow)',
+				'premium': 'var(--shadow-xl)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -88,20 +109,71 @@ export default {
 						transform: "translateY(0)"
 					}
 				},
-				"pulse-soft": {
-					"0%, 100%": {
-						opacity: "1"
+				"fade-in-up": {
+					"0%": {
+						opacity: "0",
+						transform: "translateY(20px)"
 					},
-					"50%": {
-						opacity: "0.8"
+					"100%": {
+						opacity: "1",
+						transform: "translateY(0)"
 					}
 				},
+				"scale-in": {
+					"0%": {
+						opacity: "0",
+						transform: "scale(0.95)"
+					},
+					"100%": {
+						opacity: "1",
+						transform: "scale(1)"
+					}
+				},
+				"slide-in": {
+					"0%": {
+						opacity: "0",
+						transform: "translateX(-20px)"
+					},
+					"100%": {
+						opacity: "1",
+						transform: "translateX(0)"
+					}
+				},
+				"float": {
+					"0%, 100%": {
+						transform: "translateY(0px)"
+					},
+					"50%": {
+						transform: "translateY(-10px)"
+					}
+				},
+				"pulse-glow": {
+					"0%, 100%": {
+						boxShadow: "0 0 20px hsla(var(--primary), 0.2)"
+					},
+					"50%": {
+						boxShadow: "0 0 40px hsla(var(--primary), 0.4)"
+					}
+				},
+				"shimmer": {
+					"0%": {
+						backgroundPosition: "-1000px 0"
+					},
+					"100%": {
+						backgroundPosition: "1000px 0"
+					}
+				}
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
 				"fade-in": "fade-in 0.3s ease-out",
-				"pulse-soft": "pulse-soft 2s ease-in-out infinite"
+				"fade-in-up": "fade-in-up 0.5s ease-out",
+				"scale-in": "scale-in 0.2s ease-out",
+				"slide-in": "slide-in 0.3s ease-out",
+				"float": "float 6s ease-in-out infinite",
+				"pulse-glow": "pulse-glow 2s ease-in-out infinite",
+				"shimmer": "shimmer 2s infinite linear"
 			}
 		}
 	},
