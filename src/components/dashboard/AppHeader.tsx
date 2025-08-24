@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Logo } from '@/components/ui/logo';
+
 import { useAuth } from '@/context/AuthContext';
 
 export const AppHeader: React.FC = () => {
@@ -32,14 +32,11 @@ export const AppHeader: React.FC = () => {
         {/* Mobile menu trigger */}
         <SidebarTrigger className="lg:hidden mr-2 h-8 w-8 sm:h-9 sm:w-9" />
 
-        {/* Logo and Brand */}
+        {/* Brand */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <Logo size="sm" className="h-7 sm:h-8" />
-          <div className="hidden sm:block">
-            <div className="flex flex-col">
-              <span className="font-semibold text-sm lg:text-base">NeuroCampus</span>
-              <span className="text-xs text-gray-500 hidden md:block">AMC College</span>
-            </div>
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm lg:text-base">NeuroCampus</span>
+            <span className="text-xs text-gray-500 hidden md:block">AMC College</span>
           </div>
         </div>
 
